@@ -18,7 +18,7 @@ import exceptions.UnsupportedNumberTypeException;
  */
 public final class NumericUtils implements Utils<Number> {
 	
-	
+	      
 	/**
 	 * this value means that a comparison operator has to be intended as strict (i.e. < and >)
 	 */
