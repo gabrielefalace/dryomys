@@ -1,151 +1,307 @@
 package numeric_core;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
+import org.eclipse.jdt.annotation.Nullable;
+import distance.NumericDistanceProvider;
+import exceptions.Messages;
+import exceptions.UnsupportedNumberTypeException;
 
-public class NumericList /* extends NumericStructure implements List<Number> */ {
 
-	/*
+/*
+ * TODO Have to do isProper type checking in many places!
+ */
+public class NumericList  extends NumericStructure implements List<Number> {
+
+	
+	private List<Number> numericList = new ArrayList<Number>();
+	
+	
+	public NumericList(Number delta, NumericDistanceProvider distanceProvider){
+		super.delta = delta;
+		super.distanceProvider = distanceProvider;
+	}
+	
+	public NumericList(Number delta){
+		super.delta = delta;
+	}
+	
+	@Override
+	public boolean contains(@Nullable Object o) {
+		boolean result = false;
+		if(o instanceof Number){
+			Number toCheck = (Number)o;
+			try {
+				for(Number number: numericList){
+					if(number != null && numericUtils.approximatelyEqual(number, toCheck, delta)){
+						result = true;
+						break;
+					}
+					else if(number==null){
+						throw new NullPointerException();
+					}
+				}
+			} 
+			catch (UnsupportedNumberTypeException unte) {
+				throw new ClassCastException(unte.getMessage());
+			}
+		}
+		return result;
+	}
+	
 	@Override
 	public boolean add(Number e) {
-		// TODO Auto-generated method stub
-		return false;
+		return numericList.add(e);
 	}
 
+	
 	@Override
 	public void add(int index, Number element) {
-		// TODO Auto-generated method stub
-		
+		numericList.add(index, element);
 	}
 
 	@Override
 	public boolean addAll(Collection<? extends Number> c) {
-		// TODO Auto-generated method stub
-		return false;
+		return numericList.addAll(c);
 	}
 
 	@Override
 	public boolean addAll(int index, Collection<? extends Number> c) {
-		// TODO Auto-generated method stub
-		return false;
+		return numericList.addAll(c);
 	}
 
 	@Override
 	public void clear() {
-		// TODO Auto-generated method stub
-		
+		numericList.clear();
+	}
+
+	
+
+	@Override
+	public boolean containsAll(@Nullable Collection<?> collection) {
+		if(collection == null){
+			throw new NullPointerException();
+		}
+		else{
+			boolean result = true;
+			for(Object obj: collection){
+				Number number = (Number) obj;
+				if(!this.contains(number)){
+					result = false;
+					break;
+				}
+			}
+			return result;
+		}
 	}
 
 	@Override
-	public boolean contains(Object o) {
-		// TODO Auto-generated method stub
-		return false;
+	public @Nullable Number get(int index) {
+		return numericList.get(index);
 	}
 
 	@Override
-	public boolean containsAll(Collection<?> c) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public Number get(int index) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public int indexOf(Object o) {
-		// TODO Auto-generated method stub
-		return 0;
+	public int indexOf(@Nullable Object o) {
+		if(o == null){
+			throw new NullPointerException();
+		}
+		else{
+			Number number = (Number)o;
+			int result = -1;
+			int position = 0;
+			Iterator<Number> iterator = numericList.iterator();
+			try{
+				while(iterator.hasNext()){
+					Number current = iterator.next();
+					if(current != null && numericUtils.approximatelyEqual(current, number, delta)){
+						result = position;
+						break;
+					}
+					else{
+						position++;
+					}
+				}
+			}
+			catch(UnsupportedNumberTypeException unte){
+				throw new ClassCastException(unte.getMessage());
+			}
+			return result;
+		}
 	}
 
 	@Override
 	public boolean isEmpty() {
-		// TODO Auto-generated method stub
-		return false;
+		return numericList.isEmpty();
 	}
 
 	@Override
-	public Iterator<Number> iterator() {
-		// TODO Auto-generated method stub
-		return null;
+	public @Nullable Iterator<Number> iterator() {
+		return numericList.iterator();
 	}
 
 	@Override
-	public int lastIndexOf(Object o) {
-		// TODO Auto-generated method stub
-		return 0;
+	public int lastIndexOf(@Nullable Object o) {
+		if(o == null){
+			throw new NullPointerException();
+		}
+		else{
+			Number number = (Number)o;
+			int result = -1;
+			int position = 0;
+			Iterator<Number> iterator = numericList.iterator();
+			try{
+				while(iterator.hasNext()){
+					Number current = iterator.next();
+					if(current != null && numericUtils.approximatelyEqual(current, number, delta)){
+						result = position;
+					}
+					position++;					
+				}
+				// does not break on first occurrence, but goes through all the iterations.
+			}
+			catch(UnsupportedNumberTypeException unte){
+				throw new ClassCastException(unte.getMessage());
+			}
+			return result;
+		}
 	}
 
 	@Override
-	public ListIterator<Number> listIterator() {
-		// TODO Auto-generated method stub
-		return null;
+	public @Nullable ListIterator<Number> listIterator() {
+		return numericList.listIterator();
 	}
 
 	@Override
-	public ListIterator<Number> listIterator(int index) {
-		// TODO Auto-generated method stub
-		return null;
+	public @Nullable ListIterator<Number> listIterator(int index) {
+		return numericList.listIterator(index);
 	}
 
 	@Override
-	public boolean remove(Object o) {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean remove(@Nullable Object o) {
+		boolean result = false;
+		if(o==null){
+			throw new NullPointerException();
+		}
+		else if(!(o instanceof Number)){
+			throw new ClassCastException("This collection only contains Number objects");
+		}
+		else{
+			Number number = (Number)o;
+			
+			try {
+				Number found = numericUtils.getClosest(number, this.asArray());
+				if(found != null && numericUtils.approximatelyEqual(found, number, delta)){
+					result = numericList.remove(found);
+				}
+				else if(found == null){
+					throw new NullPointerException(Messages.NULL_RECEIVED);
+				}
+			} 
+			catch (UnsupportedNumberTypeException unte) {
+				throw new ClassCastException(unte.getMessage());
+			}
+		}
+		return result;
 	}
 
 	@Override
-	public Number remove(int index) {
-		// TODO Auto-generated method stub
-		return null;
+	public @Nullable Number remove(int index) {
+		return numericList.remove(index);
 	}
 
 	@Override
-	public boolean removeAll(Collection<?> c) {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean removeAll(@Nullable Collection<?> collection) {
+		if(collection == null){
+			throw new NullPointerException(Messages.NULL_PARAMETER);
+		}
+		else{
+			boolean result = false;
+			for(Object current: collection){
+				result = result || this.remove(current);
+			}
+			return result;
+		}
 	}
 
 	@Override
-	public boolean retainAll(Collection<?> c) {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean retainAll(@Nullable Collection<?> collection) {
+		boolean outcome = false;
+		
+		if(collection == null){
+			throw new NullPointerException(Messages.NULL_PARAMETER);
+		}
+		else{
+			List<Number> passedList = new ArrayList<Number>();
+			for(Object obj: collection){
+				if(obj == null){
+					throw new NullPointerException(Messages.NULL_IN_COLLECTION);
+				}
+				else{
+					passedList.add((Number)obj);					
+				}
+			}
+			
+			try{
+				Iterator<Number> iter = numericList.iterator();
+				while(iter.hasNext()){
+					Number element = iter.next();
+					
+					boolean elementToRetain = false;
+					
+					for(Number passed: passedList){
+						if(element != null && passed != null && numericUtils.approximatelyEqual(element, passed, delta))
+							elementToRetain = true;	
+					}
+					
+					if(!elementToRetain){
+						iter.remove();
+						outcome = true;
+					}
+				}
+			}
+			catch(UnsupportedNumberTypeException unte){
+				throw new ClassCastException(unte.getMessage());
+			}
+		}
+		return outcome;
 	}
 
 	@Override
-	public Number set(int index, Number element) {
-		// TODO Auto-generated method stub
-		return null;
+	public @Nullable Number set(int index, Number element) {
+		return numericList.set(index, element);
 	}
 
 	@Override
 	public int size() {
-		// TODO Auto-generated method stub
-		return 0;
+		return numericList.size();
 	}
 
 	@Override
-	public List<Number> subList(int fromIndex, int toIndex) {
-		// TODO Auto-generated method stub
-		return null;
+	public @Nullable List<Number> subList(int fromIndex, int toIndex) {
+		return numericList.subList(fromIndex, toIndex);
 	}
 
 	@Override
-	public Object[] toArray() {
-		// TODO Auto-generated method stub
-		return null;
+	public @Nullable Object[] toArray() {
+		return numericList.toArray();
 	}
 
 	@Override
-	public <T> T[] toArray(T[] a) {
-		// TODO Auto-generated method stub
-		return null;
+	public @Nullable <T> T[] toArray(T[] a) {
+		return numericList.toArray(a);
 	}
 	
-	*/
+	
+	public Number[] asArray(){
+		Number[] result = new Number[numericList.size()];
+		result = numericList.toArray(result);
+		if(result == null){
+			result = new Number[0];
+		}
+		return result;
+	}
  
 }

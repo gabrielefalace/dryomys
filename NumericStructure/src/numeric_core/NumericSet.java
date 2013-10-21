@@ -76,7 +76,7 @@ public class NumericSet implements Set<Number> {
 	 * In this case, the element id not added.
 	 */
 	@Override
-	public boolean add(@Nullable Number element) throws ClassCastException {
+	public boolean add(@Nullable Number element) {
 		boolean outcome = false; 
 		if(element==null){
 			throw new NullPointerException();
