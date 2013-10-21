@@ -10,7 +10,7 @@ import exceptions.UnsupportedNumberTypeException;
 public class ManhattanDistanceProvider implements TupleDistanceProvider {
 
 	@Override
-	public final Number distance(Tuple t1, Tuple t2) throws UnsupportedNumberTypeException{
+	public final strictfp Number distance(Tuple t1, Tuple t2) throws UnsupportedNumberTypeException{
 		Number result;
 		
 		Number n1 = t1.get(0);

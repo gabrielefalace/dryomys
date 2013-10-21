@@ -9,7 +9,7 @@ public class DefaultDistanceProvider implements NumericDistanceProvider {
 
 	
 	@Override
-	public final Number distance(Number n1, Number n2) throws UnsupportedNumberTypeException{
+	public final strictfp Number distance(Number n1, Number n2) throws UnsupportedNumberTypeException{
 		Number result;
 		
 		if((n1 instanceof Float) && (n2 instanceof Float)){
