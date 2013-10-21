@@ -24,15 +24,12 @@ public class ExceptionFactory {
 	 * @return an UnsupportedNumberTypeException referring to the first object of an unsupported type
 	 */
 	public static final UnsupportedNumberTypeException createUnsupportedNumberType(Number ... numbers){
-		UnsupportedNumberTypeException unte = null;
+		UnsupportedNumberTypeException unte = new UnsupportedNumberTypeException("Unsupported type, not related to a particular number");
 		for(Number o: numbers){
 			if(o != null && !numericUtils.isProper(o)){
 				unte = new UnsupportedNumberTypeException(o);
 				break;
 			}
-		}
-		if(unte == null){
-			unte = new UnsupportedNumberTypeException("Unsupported type, not related to a particular number");
 		}
 		return unte;
 	}
