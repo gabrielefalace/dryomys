@@ -5,7 +5,7 @@ import java.util.Iterator;
 
 import tuples.Tuple;
 import exceptions.ExceptionFactory;
-import exceptions.UnsupportedNumberTypeException;
+import exceptions.UnsupportedTypeException;
 
 /**
  * This class provides an implementation of the Manhattan distance (also known as block distance)
@@ -19,7 +19,7 @@ public class ManhattanDistanceProvider implements TupleDistanceProvider {
 	 * The Manhattan distance between the two Tuple
 	 */
 	@Override
-	public final strictfp Number distance(Tuple t1, Tuple t2) throws UnsupportedNumberTypeException{
+	public final strictfp Number distance(Tuple t1, Tuple t2) throws UnsupportedTypeException{
 		Number result;
 		
 		Number n1 = t1.get(0);

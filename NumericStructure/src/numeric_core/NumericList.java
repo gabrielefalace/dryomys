@@ -8,7 +8,7 @@ import java.util.ListIterator;
 import org.eclipse.jdt.annotation.Nullable;
 import distance.NumericDistanceProvider;
 import exceptions.Messages;
-import exceptions.UnsupportedNumberTypeException;
+import exceptions.UnsupportedTypeException;
 
 
 /*
@@ -45,7 +45,7 @@ public class NumericList  extends NumericStructure implements List<Number> {
 					}
 				}
 			} 
-			catch (UnsupportedNumberTypeException unte) {
+			catch (UnsupportedTypeException unte) {
 				throw new ClassCastException(unte.getMessage());
 			}
 		}
@@ -125,7 +125,7 @@ public class NumericList  extends NumericStructure implements List<Number> {
 					}
 				}
 			}
-			catch(UnsupportedNumberTypeException unte){
+			catch(UnsupportedTypeException unte){
 				throw new ClassCastException(unte.getMessage());
 			}
 			return result;
@@ -162,7 +162,7 @@ public class NumericList  extends NumericStructure implements List<Number> {
 				}
 				// does not break on first occurrence, but goes through all the iterations.
 			}
-			catch(UnsupportedNumberTypeException unte){
+			catch(UnsupportedTypeException unte){
 				throw new ClassCastException(unte.getMessage());
 			}
 			return result;
@@ -200,7 +200,7 @@ public class NumericList  extends NumericStructure implements List<Number> {
 					throw new NullPointerException(Messages.NULL_RECEIVED);
 				}
 			} 
-			catch (UnsupportedNumberTypeException unte) {
+			catch (UnsupportedTypeException unte) {
 				throw new ClassCastException(unte.getMessage());
 			}
 		}
@@ -262,7 +262,7 @@ public class NumericList  extends NumericStructure implements List<Number> {
 					}
 				}
 			}
-			catch(UnsupportedNumberTypeException unte){
+			catch(UnsupportedTypeException unte){
 				throw new ClassCastException(unte.getMessage());
 			}
 		}

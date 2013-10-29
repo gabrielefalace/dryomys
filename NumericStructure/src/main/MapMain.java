@@ -5,11 +5,11 @@ import java.util.Map;
 
 import numeric_core.NumericMap;
 import numeric_core.NumericSet;
-import exceptions.UnsupportedNumberTypeException;
+import exceptions.UnsupportedTypeException;
 
 public class MapMain {
 	
-	public static void main(String ... args) throws UnsupportedNumberTypeException{
+	public static void main(String ... args) throws UnsupportedTypeException{
 		
 		Double delta = 0.00001;
 		

@@ -1,7 +1,7 @@
 package distance;
 
 import tuples.Tuple;
-import exceptions.UnsupportedNumberTypeException;
+import exceptions.UnsupportedTypeException;
 
 /**
  * This interface defines the DistanceProvider to make calculations among Tuple objects
@@ -17,8 +17,8 @@ public interface TupleDistanceProvider extends DistanceProvider<Tuple>{
 	 * @param t1 the first Tuple
 	 * @param t2 the second Tuple
 	 * @return the distance between the two Tuple
-	 * @throws UnsupportedNumberTypeException if one of the two arguments contains some element of type different from Float/Double/BigDecimal
+	 * @throws UnsupportedTypeException if one of the two arguments contains some element of type different from Float/Double/BigDecimal
 	 */
-	public Number distance(Tuple t1, Tuple t2) throws UnsupportedNumberTypeException;
+	public Number distance(Tuple t1, Tuple t2) throws UnsupportedTypeException;
 
 }

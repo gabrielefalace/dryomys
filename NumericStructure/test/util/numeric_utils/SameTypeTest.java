@@ -10,7 +10,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import util.NumericUtils;
-import exceptions.UnsupportedNumberTypeException;
+import exceptions.UnsupportedTypeException;
 
 public class SameTypeTest {
 
@@ -33,7 +33,7 @@ public class SameTypeTest {
 			boolean outcome = numericUtils.checkSameType(d1, d2);
 			assertTrue(outcome);
 		}
-		catch(UnsupportedNumberTypeException unsupported){
+		catch(UnsupportedTypeException unsupported){
 			fail("Shouldn't have thrown this: "+unsupported.getMessage());
 		}
 	}
@@ -46,7 +46,7 @@ public class SameTypeTest {
 			boolean outcome = numericUtils.checkSameType(d1, f2);
 			assertFalse(outcome);
 		}
-		catch(UnsupportedNumberTypeException unsupported){
+		catch(UnsupportedTypeException unsupported){
 			fail("Shouldn't have thrown this: "+unsupported.getMessage());
 		}
 	}
@@ -62,7 +62,7 @@ public class SameTypeTest {
 			boolean outcome = numericUtils.checkSameType(f1, f2);
 			assertTrue(outcome);
 		}
-		catch(UnsupportedNumberTypeException unsupported){
+		catch(UnsupportedTypeException unsupported){
 			fail("Shouldn't have thrown this: "+unsupported.getMessage());
 		}
 	}
@@ -76,7 +76,7 @@ public class SameTypeTest {
 			boolean outcome = numericUtils.checkSameType(f1, d2);
 			assertFalse(outcome);
 		}
-		catch(UnsupportedNumberTypeException unsupported){
+		catch(UnsupportedTypeException unsupported){
 			fail("Shouldn't have thrown this: "+unsupported.getMessage());
 		}
 	}
@@ -98,7 +98,7 @@ public class SameTypeTest {
 			assertTrue(outcome2);
 			assertTrue(outcome3);
 		}
-		catch(UnsupportedNumberTypeException unsupported){
+		catch(UnsupportedTypeException unsupported){
 			fail("Shouldn't have thrown this: "+unsupported.getMessage());
 		}
 	}
@@ -120,7 +120,7 @@ public class SameTypeTest {
 			assertFalse(outcome3);
 			assertFalse(outcome4);
 		}
-		catch(UnsupportedNumberTypeException unsupported){
+		catch(UnsupportedTypeException unsupported){
 			fail("Shouldn't have thrown this: "+unsupported.getMessage());
 		}
 	}
@@ -142,7 +142,7 @@ public class SameTypeTest {
 			assertTrue(outcome2);
 			assertTrue(outcome3);
 		}
-		catch(UnsupportedNumberTypeException unsupported){
+		catch(UnsupportedTypeException unsupported){
 			fail("Shouldn't have thrown this: "+unsupported.getMessage());
 		}
 	}
@@ -166,7 +166,7 @@ public class SameTypeTest {
 			assertFalse(outcome3);
 			assertFalse(outcome4);
 		}
-		catch(UnsupportedNumberTypeException unsupported){
+		catch(UnsupportedTypeException unsupported){
 			fail("Shouldn't have thrown this: "+unsupported.getMessage());
 		}
 	}
@@ -183,7 +183,7 @@ public class SameTypeTest {
 			boolean outcome = numericUtils.checkSameType(b1, b2);
 			assertTrue(outcome);
 		}
-		catch(UnsupportedNumberTypeException unsupported){
+		catch(UnsupportedTypeException unsupported){
 			fail("Shouldn't have thrown this: "+unsupported.getMessage());
 		}
 	}
@@ -207,7 +207,7 @@ public class SameTypeTest {
 			assertFalse(outcome4);
 			
 		}
-		catch(UnsupportedNumberTypeException unsupported){
+		catch(UnsupportedTypeException unsupported){
 			fail("Shouldn't have thrown this: "+unsupported.getMessage());
 		}
 	}

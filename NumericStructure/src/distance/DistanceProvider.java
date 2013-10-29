@@ -1,6 +1,6 @@
 package distance;
 
-import exceptions.UnsupportedNumberTypeException;
+import exceptions.UnsupportedTypeException;
 
 /**
  * This interface represents an object having the capability to make distance-based calculations
@@ -19,8 +19,8 @@ public interface DistanceProvider<T> {
 	 * @param firstElement the first element of type T to use
 	 * @param secondElement the first element of type T to use
 	 * @return the distance between the two elements
-	 * @throws UnsupportedNumberTypeException when objects passed in are not Float/Double/BigDecimal
+	 * @throws UnsupportedTypeException when objects passed in are not Float/Double/BigDecimal
 	 */
-	public Number distance(T firstElement, T secondElement) throws UnsupportedNumberTypeException;
+	public Number distance(T firstElement, T secondElement) throws UnsupportedTypeException;
 	
 }

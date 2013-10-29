@@ -9,7 +9,7 @@ import org.eclipse.jdt.annotation.Nullable;
 
 import distance.NumericDistanceProvider;
 import util.NumericUtils;
-import exceptions.UnsupportedNumberTypeException;
+import exceptions.UnsupportedTypeException;
 
 /*
  * To comply with the Collection contract, when a UnsupportedNumberTypeException is thrown
@@ -144,7 +144,7 @@ public class NumericSet implements Set<Number> {
 					}
 				}
 			}
-			catch(UnsupportedNumberTypeException unte){
+			catch(UnsupportedTypeException unte){
 				throw new ClassCastException(unte.getMessage());
 			}
 		}
@@ -207,7 +207,7 @@ public class NumericSet implements Set<Number> {
 					}
 				}
 			}
-			catch(UnsupportedNumberTypeException unte){
+			catch(UnsupportedTypeException unte){
 				throw new ClassCastException(unte.getMessage());
 			}
 		}
@@ -273,7 +273,7 @@ public class NumericSet implements Set<Number> {
 					}
 				}
 			}
-			catch(UnsupportedNumberTypeException unte){
+			catch(UnsupportedTypeException unte){
 				throw new ClassCastException(unte.getMessage());
 			}
 		}
@@ -306,7 +306,7 @@ public class NumericSet implements Set<Number> {
 	
 	
 	
-	public final NumericSet getByRange(Number from, boolean strictFrom, Number to, boolean strictTo) throws UnsupportedNumberTypeException{
+	public final NumericSet getByRange(Number from, boolean strictFrom, Number to, boolean strictTo) throws UnsupportedTypeException{
 		NumericSet result = new NumericSet(this.delta);
 		
 		boolean greaterThanFrom, lessThanTo;

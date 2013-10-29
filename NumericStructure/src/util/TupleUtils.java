@@ -4,7 +4,7 @@ import org.eclipse.jdt.annotation.Nullable;
 import tuples.Tuple;
 import distance.ManhattanDistanceProvider;
 import distance.TupleDistanceProvider;
-import exceptions.UnsupportedNumberTypeException;
+import exceptions.UnsupportedTypeException;
 
 
 /*
@@ -38,7 +38,7 @@ public class TupleUtils implements Utils<Tuple>{
 	}
 	
 	
-	public final boolean approximatelyEqual(Tuple t1, Tuple t2, Number delta) throws UnsupportedNumberTypeException {
+	public final boolean approximatelyEqual(Tuple t1, Tuple t2, Number delta) throws UnsupportedTypeException {
 		Number distance = distanceProvider.distance(t1, t2);
 		boolean result = false;
 		if(distance != null){
@@ -50,7 +50,7 @@ public class TupleUtils implements Utils<Tuple>{
 	
 	
 	
-	public final @Nullable Tuple getClosest(Tuple tuple, Tuple[] array) throws UnsupportedNumberTypeException {
+	public final @Nullable Tuple getClosest(Tuple tuple, Tuple[] array) throws UnsupportedTypeException {
 		if(array.length==0){
 			throw new NullPointerException("method \"getClosest\" called on an empty structure");
 		}
@@ -96,7 +96,6 @@ public class TupleUtils implements Utils<Tuple>{
 	
 	
 	
-	//TODO Refactor this name!!!
 	public boolean isProper(Tuple tuple){
 		if(tuple.isEmpty()){
 			return true;

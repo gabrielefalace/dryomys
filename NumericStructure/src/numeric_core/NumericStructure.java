@@ -3,7 +3,7 @@ package numeric_core;
 import distance.NumericDistanceProvider;
 import exceptions.ExceptionFactory;
 import exceptions.InconsistentNumberTypeException;
-import exceptions.UnsupportedNumberTypeException;
+import exceptions.UnsupportedTypeException;
 import util.NumericUtils;
 
 
@@ -40,7 +40,7 @@ public abstract class NumericStructure {
 	 * Returns the data type allowed in this structure
 	 * @return a String that is the class name of the delta, which constraints the type of data this structure should hold
 	 */
-	public String getStructureType() throws UnsupportedNumberTypeException {
+	public String getStructureType() throws UnsupportedTypeException {
 		String result = delta.getClass().getName();
 		if(result == null){
 			throw ExceptionFactory.createUnsupportedNumberType(delta);
@@ -58,10 +58,10 @@ public abstract class NumericStructure {
 	 * @param number the Object to check
 	 * @return true if the argument can be stored in this structure
 	 */
-	public boolean isTypeConsistent(Number number) throws InconsistentNumberTypeException, UnsupportedNumberTypeException {
+	public boolean isTypeConsistent(Number number) throws InconsistentNumberTypeException, UnsupportedTypeException {
 		boolean result = false;
 		if(!numericUtils.isProper(number)){
-			throw new UnsupportedNumberTypeException(number);
+			throw new UnsupportedTypeException(number);
 		}
 		else{
 			result = numericUtils.checkSameType(delta, number);

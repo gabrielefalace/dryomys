@@ -11,7 +11,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 
-import exceptions.UnsupportedNumberTypeException;
+import exceptions.UnsupportedTypeException;
 import util.NumericUtils;
 
 @RunWith(Parameterized.class)
@@ -71,7 +71,7 @@ public class ObjectComparisonsTest {
 			}
 		
 		}
-		catch(UnsupportedNumberTypeException unte){
+		catch(UnsupportedTypeException unte){
 			unte.printStackTrace();
 		}
 	}

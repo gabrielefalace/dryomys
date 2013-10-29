@@ -7,14 +7,14 @@ package exceptions;
  * @author gabriele
  *
  */
-public class UnsupportedNumberTypeException extends Exception {
+public class UnsupportedTypeException extends Exception {
 
 	private static final long serialVersionUID = 1L;
 
 	/**
 	 * default constructor
 	 */
-	public UnsupportedNumberTypeException() {
+	public UnsupportedTypeException() {
 		super();
 	}
 	
@@ -22,7 +22,7 @@ public class UnsupportedNumberTypeException extends Exception {
 	 * Single string constructor
 	 * @param s the string passed to superclass.
 	 */
-	public UnsupportedNumberTypeException(String s) {
+	public UnsupportedTypeException(String s) {
 		super(s);
 	}
 	
@@ -30,7 +30,7 @@ public class UnsupportedNumberTypeException extends Exception {
 	 * A more detailed constructor, reporting information about the object violating allowed types.
 	 * @param object the not allowed object.
 	 */
-	public UnsupportedNumberTypeException(Object object) {
+	public UnsupportedTypeException(Object object) {
 		super("ATTENTION! ONLY SUPPORTED TYPES ARE: Float, Double, BigDecimal \n You used a "+object.getClass().getName());
 	}
 	

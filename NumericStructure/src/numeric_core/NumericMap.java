@@ -10,7 +10,7 @@ import org.eclipse.jdt.annotation.Nullable;
 import distance.DefaultDistanceProvider;
 import distance.NumericDistanceProvider;
 import exceptions.InconsistentNumberTypeException;
-import exceptions.UnsupportedNumberTypeException;
+import exceptions.UnsupportedTypeException;
 import util.NumericUtils;
 
 /*
@@ -122,7 +122,7 @@ public class NumericMap<V> extends NumericStructure implements Map<Number, V> {
 					}
 				}
 			}
-			catch(UnsupportedNumberTypeException e){
+			catch(UnsupportedTypeException e){
 				e.printStackTrace();
 			}
 		}
@@ -150,7 +150,7 @@ public class NumericMap<V> extends NumericStructure implements Map<Number, V> {
 					result = this.numericMap.get(closestKey);
 				}
 			}
-			catch (UnsupportedNumberTypeException e) {
+			catch (UnsupportedTypeException e) {
 				e.printStackTrace();
 			}
 		}
@@ -188,7 +188,7 @@ public class NumericMap<V> extends NumericStructure implements Map<Number, V> {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} 
-			catch (UnsupportedNumberTypeException e) {
+			catch (UnsupportedTypeException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
@@ -235,7 +235,7 @@ public class NumericMap<V> extends NumericStructure implements Map<Number, V> {
 					result = this.numericMap.remove(closestKey);
 				}
 			}
-			catch (UnsupportedNumberTypeException e) {
+			catch (UnsupportedTypeException e) {
 				e.getMessage();
 			}
 		}

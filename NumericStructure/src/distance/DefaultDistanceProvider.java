@@ -3,7 +3,7 @@ package distance;
 import java.math.BigDecimal;
 
 import exceptions.ExceptionFactory;
-import exceptions.UnsupportedNumberTypeException;
+import exceptions.UnsupportedTypeException;
 
 /**
  * This class simply provides an implementation of the distance between two Numbers as the absolute value of their difference.
@@ -17,7 +17,7 @@ public class DefaultDistanceProvider implements NumericDistanceProvider {
 	 * The distance as a simple difference, in absolute value
 	 */
 	@Override
-	public final strictfp Number distance(Number n1, Number n2) throws UnsupportedNumberTypeException{
+	public final strictfp Number distance(Number n1, Number n2) throws UnsupportedTypeException{
 		Number result;
 		
 		if((n1 instanceof Float) && (n2 instanceof Float)){

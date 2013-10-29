@@ -11,7 +11,7 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 
 import util.NumericUtils;
-import exceptions.UnsupportedNumberTypeException;
+import exceptions.UnsupportedTypeException;
 
 @RunWith(Parameterized.class)
 public class DoubleComparisonsTest {
@@ -64,7 +64,7 @@ public class DoubleComparisonsTest {
 				assertTrue(numericUtils.lessThan(secondDouble, firstDouble, !strictness) || equal);
 			}
 		}
-		catch(UnsupportedNumberTypeException unte){
+		catch(UnsupportedTypeException unte){
 			unte.printStackTrace();
 		}
 	}

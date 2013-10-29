@@ -8,13 +8,15 @@ import org.eclipse.jdt.annotation.Nullable;
 import distance.DefaultDistanceProvider;
 import distance.NumericDistanceProvider;
 import exceptions.ExceptionFactory;
-import exceptions.UnsupportedNumberTypeException;
+import exceptions.UnsupportedTypeException;
 
 /**
  * 
- * @author Gabriele Falace
+ * This class provides several functionalities to manipulate Number objects and their related primitives.
+ * The behavior is based on the DistanceProvider object, which is the DefaultDistanceProvider.
+ * If the user wants to use a different DistanceProvider, the setDistanceProvider() method should be used.
  * 
- *
+ * @author Gabriele Falace
  */
 public final class NumericUtils implements Utils<Number> {
 	   
@@ -53,9 +55,9 @@ public final class NumericUtils implements Utils<Number> {
 	}
 	
 	/**
-	 * Singleton getInstance method. Only at first invocation, being the variable null, it gets initialized.
-	 * In any other case it only returns a reference to that unique object.
-	 * Since this methods has no argument, the default DistanceProvider will be used.
+	 * Singleton getInstance method.
+	 * In any case it only returns a reference to the unique instance of this class.
+	 * The default DistanceProvider will be used.
 	 * @return the instance of NumericUtils
 	 */
 	public synchronized static NumericUtils getInstance(){
@@ -87,9 +89,9 @@ public final class NumericUtils implements Utils<Number> {
 	 * @param number the number to be found
 	 * @param array the array of Number to search in
 	 * @return the Number in the array which has the minimum distance to the given number
-	 * @throws UnsupportedNumberTypeException if Number used are not Float, Double or BigDecimal
+	 * @throws UnsupportedTypeException if Number used are not Float, Double or BigDecimal
 	 */
-	public final @Nullable Number getClosest(Number number, Number[] array) throws UnsupportedNumberTypeException {
+	public final @Nullable Number getClosest(Number number, Number[] array) throws UnsupportedTypeException {
 		if(array.length==0){
 			throw new NullPointerException("method \"getClosest\" called on an empty structure");
 		}
@@ -147,9 +149,9 @@ public final class NumericUtils implements Utils<Number> {
 	 * @param n2 another Number
 	 * @param delta the tolerance for equality
 	 * @return true if the number are approximately equal
-	 * @throws UnsupportedNumberTypeException when one of the arguments is not Float, Double or BigDecimal.
+	 * @throws UnsupportedTypeException when one of the arguments is not Float, Double or BigDecimal.
 	 */
-	public final boolean approximatelyEqual(Number n1, Number n2, Number delta) throws UnsupportedNumberTypeException {
+	public final boolean approximatelyEqual(Number n1, Number n2, Number delta) throws UnsupportedTypeException {
 		Number distance = distanceProvider.distance(n1, n2);
 		boolean result = false;
 		
@@ -186,9 +188,9 @@ public final class NumericUtils implements Utils<Number> {
 	 * @param n2 the other Number to compare
 	 * @param strictness if set to true, it has a ">" semantic, otherwise it means ">="
 	 * @return a boolean given by strictness==true? n1>n2 : n1>=n2
-	 * @throws UnsupportedNumberTypeException
+	 * @throws UnsupportedTypeException
 	 */
-	public final boolean greaterThan(Number n1, Number n2, boolean strictness)throws UnsupportedNumberTypeException {
+	public final boolean greaterThan(Number n1, Number n2, boolean strictness)throws UnsupportedTypeException {
 //		boolean result = false;
 //		
 //		if((n1 instanceof Float) && (n2 instanceof Float)){
@@ -222,9 +224,9 @@ public final class NumericUtils implements Utils<Number> {
 	 * @param n2 the other Number to compare
 	 * @param strictness if set to true, it has a "<" semantic, otherwise it means "<="
 	 * @return a boolean given by strictness==true? n1<n2 : n1<=n2
-	 * @throws UnsupportedNumberTypeException
+	 * @throws UnsupportedTypeException
 	 */
-	public final boolean lessThan(Number n1, Number n2, boolean strictness)throws UnsupportedNumberTypeException {
+	public final boolean lessThan(Number n1, Number n2, boolean strictness)throws UnsupportedTypeException {
 		boolean result = false;
 		
 		if((n1 instanceof Float) && (n2 instanceof Float)){
@@ -255,9 +257,9 @@ public final class NumericUtils implements Utils<Number> {
 	 * @param n1 the first Number to be compared
 	 * @param n2 the second Number to be compared
 	 * @return true if the two Number are from the same class
-	 * @throws UnsupportedNumberTypeException when Number is not Float, Double or BigDecimal
+	 * @throws UnsupportedTypeException when Number is not Float, Double or BigDecimal
 	 */
-	public final boolean checkSameType(Number n1, Number n2) throws UnsupportedNumberTypeException {
+	public final boolean checkSameType(Number n1, Number n2) throws UnsupportedTypeException {
 		if(isProper(n1) && isProper(n2)){
 			
 			boolean result = false;
