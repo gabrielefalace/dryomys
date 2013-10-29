@@ -3,8 +3,9 @@ package distance;
 import exceptions.UnsupportedNumberTypeException;
 
 /**
+ * This interface defines the DistanceProvider to make calculations among Number objects
  * 
- * @author Gabriele Falace
+ * @author gabriele
  *
  */
 public interface NumericDistanceProvider extends DistanceProvider<Number> {
@@ -14,7 +15,7 @@ public interface NumericDistanceProvider extends DistanceProvider<Number> {
 	 * @param n1 the first Number
 	 * @param n2 the second Number
 	 * @return the distance between the two Number
-	 * @throws UnsupportedNumberTypeException if one of the two arguments is different from Float, Double or BigDecimal
+	 * @throws UnsupportedNumberTypeException if one of the two arguments is different from Float/Double/BigDecimal
 	 */
 	public Number distance(Number n1, Number n2) throws UnsupportedNumberTypeException;
 

@@ -7,8 +7,17 @@ import tuples.Tuple;
 import exceptions.ExceptionFactory;
 import exceptions.UnsupportedNumberTypeException;
 
+/**
+ * This class provides an implementation of the Manhattan distance (also known as block distance)
+ * 
+ * @author gabriele
+ *
+ */
 public class ManhattanDistanceProvider implements TupleDistanceProvider {
 
+	/**
+	 * The Manhattan distance between the two Tuple
+	 */
 	@Override
 	public final strictfp Number distance(Tuple t1, Tuple t2) throws UnsupportedNumberTypeException{
 		Number result;

@@ -215,7 +215,7 @@ public class NumericList  extends NumericStructure implements List<Number> {
 	@Override
 	public boolean removeAll(@Nullable Collection<?> collection) {
 		if(collection == null){
-			throw new NullPointerException(Messages.NULL_PARAMETER);
+			throw new NullPointerException(Messages.NULL_ARGUMENT);
 		}
 		else{
 			boolean result = false;
@@ -231,7 +231,7 @@ public class NumericList  extends NumericStructure implements List<Number> {
 		boolean outcome = false;
 		
 		if(collection == null){
-			throw new NullPointerException(Messages.NULL_PARAMETER);
+			throw new NullPointerException(Messages.NULL_ARGUMENT);
 		}
 		else{
 			List<Number> passedList = new ArrayList<Number>();
