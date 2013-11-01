@@ -1,28 +1,31 @@
 package tuples;
 
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
-import java.util.ListIterator;
+
 import org.eclipse.jdt.annotation.Nullable;
 
 
-/*
- * TODO under construction ... 
+/**
+ * A Tuple is an Iterable object made of a list of Number.
  * 
+ * @author gabriele
  */
-public class Tuple implements List<Number> {
+public class Tuple implements Iterable<Number> {
 	
-	
-	private int dimension;
-	
-	
+	/**
+	 * inner List of Number objects, representing tuple values
+	 */
 	private List<Number> values;
 	
 	
+	
+	/**
+	 * Constructor for the Tuple
+	 * @param values an array or explicit list of Number objects which will form this Tuple.
+	 */
 	public Tuple(Number ... values){
-		this.dimension = values.length;
 		List<Number> tmpValues = Arrays.asList(values); 
 		if(tmpValues != null){
 			this.values = tmpValues;
@@ -32,70 +35,74 @@ public class Tuple implements List<Number> {
 		}
 	}
 	
-	
+	/**
+	 * Gives the number of the elements in this Tuple
+	 * @return the size of the underlying list
+	 */
 	public int getDimension(){
-		return dimension;
+		return values.size();
 	}
 	
-	
+	/**
+	 * Gives the values of this Tuple
+	 * @return a List of Number
+	 */
 	public List<Number> getValues(){
 		return this.values;
 	}
 	
-	
+	/**
+	 * 
+	 * @param values
+	 */
 	public void setValues(List<Number> values){
 		this.values = values;
 	}
 	
-
-	@Override
-	public @Nullable ListIterator<Number> listIterator() {
-		return values.listIterator();
-	}
-
-	
-	@Override
-	public @Nullable ListIterator<Number> listIterator(int i) {
-		return values.listIterator(i);
-	}
-
-	
-	@Override
+	/**
+	 * 
+	 * @return an array containing the values
+	 */
 	public @Nullable Object[] toArray() {
 		return values.toArray(); 
 	}
 
-	
-	@SuppressWarnings("unchecked")
-	@Override
-	public @Nullable Object[] toArray(Object[] arg0) {
-		return values.toArray(arg0);
+	/**
+	 * 
+	 * @param array the array into which the elements of this Tuple are to be stored
+	 * @return an array containing the elements of this Tuple
+	 */
+	public @Nullable Object[] toArray(Object[] array) {
+		return values.toArray(array);
 	}
 	
-	
-	@Override
-	public @Nullable Number set(int arg0, Number arg1) {
-		return values.set(arg0, arg1);
+	/**
+	 * 
+	 * @param index the index of the element to replace
+	 * @param element element to be stored at the specified position 
+	 * @return the element previously at the specified position 
+	 */
+	public @Nullable Number set(int index, Number element) {
+		return values.set(index, element);
 	}
 
-	
-	@Override
-	public int size() {
-		return values.size();
-	}
-
-	
-	@Override
-	public Number get(int i) {
-		return values.get(i);
+	/**
+	 * 
+	 * @param index the index of the element to return 
+	 * @return the element at the specified position in this list
+	 */
+	public @Nullable Number get(int index) {
+		return values.get(index);
 	}
 	
-	
-	@Override
-	@SuppressWarnings("null")
-	public Iterator<Number> iterator() {
-		return values.iterator();
+	/**
+	 * Tests if this Tuple has dimension zero
+	 * @return true if the values List is empty
+	 */
+	public boolean isEmpty() {
+		return values.isEmpty();
 	}
+	
 	
 	
 	@Override
@@ -120,7 +127,7 @@ public class Tuple implements List<Number> {
 		boolean result = true;	
 		if(o != null && o instanceof Tuple){
 			Tuple other = (Tuple)o;
-			if(this.size() == other.size()){
+			if(this.getDimension() == other.getDimension()){
 				Iterator<Number> iThis = this.iterator();
 				Iterator<Number> iOther = other.iterator();
 				if(iThis != null && iOther != null){
@@ -143,97 +150,12 @@ public class Tuple implements List<Number> {
 		}
 		return result;
 	}
-	
-	
-	
-
-	@Override
-	public boolean isEmpty() {
-		return this.size()==0;
-	}
-	
-	
-	
-	
-	/* **************************************************
-	 * 
-	 *      (TEMPORARILY?)  UNSUPPORTED OPERATIONS 
-	 * 
-	 ****************************************************/
-	
-	@Override
-	public boolean remove(@Nullable Object arg0) {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	public Number remove(int arg0) {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	@SuppressWarnings("rawtypes")
-	public boolean removeAll(@Nullable Collection arg0) {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	@SuppressWarnings("rawtypes")
-	public boolean retainAll(@Nullable Collection arg0) {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	public List<Number> subList(int arg0, int arg1) {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	public boolean add(Number arg0) {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	public void add(int arg0, Number arg1) {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	@SuppressWarnings("rawtypes")
-	public boolean addAll(@Nullable Collection arg0) {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	@SuppressWarnings("rawtypes")
-	public boolean addAll(int arg0, @Nullable Collection arg1) {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	public void clear() {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	public boolean contains(@Nullable Object arg0) {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	@SuppressWarnings("rawtypes")
-	public boolean containsAll(@Nullable Collection arg0) {
-		throw new UnsupportedOperationException();
-	}
 
 	
 	@Override
-	public int indexOf(@Nullable Object arg0) {
-		throw new UnsupportedOperationException();
+	public @Nullable Iterator<Number> iterator() {
+		return values.iterator();
 	}
 
-	@Override
-	public int lastIndexOf(@Nullable Object arg0) {
-		throw new UnsupportedOperationException();
-	}
+	
 }

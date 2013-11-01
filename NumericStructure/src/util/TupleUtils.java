@@ -97,21 +97,24 @@ public class TupleUtils implements Utils<Tuple>{
 	
 	
 	public boolean isProper(Tuple tuple){
+		boolean result = false;
 		if(tuple.isEmpty()){
-			return true;
+			result = true;
 		}
 		else{
 			Number first = tuple.get(0);
-			boolean result = true;
-			String className = first.getClass().getName();
-			for(Number number: tuple){
-				if(!className.equals(number.getClass().getName())){
-					result = false;
-					break;
+			if(first != null){
+				result = true;
+				String className = first.getClass().getName();
+				for(Number number: tuple){
+					if(!className.equals(number.getClass().getName())){
+						result = false;
+						break;
+					}
 				}
 			}
-			return result;
 		}
+		return result;
 	}
 	
 }
