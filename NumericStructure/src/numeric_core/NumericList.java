@@ -5,8 +5,10 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
+
 import org.eclipse.jdt.annotation.Nullable;
-import distance.NumericDistanceProvider;
+
+import distance.DistanceProvider;
 import exceptions.Messages;
 import exceptions.UnsupportedTypeException;
 
@@ -20,9 +22,9 @@ public class NumericList  extends NumericStructure implements List<Number> {
 	private List<Number> numericList = new ArrayList<Number>();
 	
 	
-	public NumericList(Number delta, NumericDistanceProvider distanceProvider){
+	public NumericList(Number delta, DistanceProvider<Number> distanceProvider){
 		super.delta = delta;
-		super.distanceProvider = distanceProvider;
+		super.engine.setDistanceProvider(distanceProvider);
 	}
 	
 	public NumericList(Number delta){
@@ -36,7 +38,7 @@ public class NumericList  extends NumericStructure implements List<Number> {
 			Number toCheck = (Number)o;
 			try {
 				for(Number number: numericList){
-					if(number != null && numericUtils.approximatelyEqual(number, toCheck, delta)){
+					if(number != null && engine.approximatelyEqual(number, toCheck, delta)){
 						result = true;
 						break;
 					}
@@ -116,7 +118,7 @@ public class NumericList  extends NumericStructure implements List<Number> {
 			try{
 				while(iterator.hasNext()){
 					Number current = iterator.next();
-					if(current != null && numericUtils.approximatelyEqual(current, number, delta)){
+					if(current != null && engine.approximatelyEqual(current, number, delta)){
 						result = position;
 						break;
 					}
@@ -155,7 +157,7 @@ public class NumericList  extends NumericStructure implements List<Number> {
 			try{
 				while(iterator.hasNext()){
 					Number current = iterator.next();
-					if(current != null && numericUtils.approximatelyEqual(current, number, delta)){
+					if(current != null && engine.approximatelyEqual(current, number, delta)){
 						result = position;
 					}
 					position++;					
@@ -192,8 +194,8 @@ public class NumericList  extends NumericStructure implements List<Number> {
 			Number number = (Number)o;
 			
 			try {
-				Number found = numericUtils.getClosest(number, this.asArray());
-				if(found != null && numericUtils.approximatelyEqual(found, number, delta)){
+				Number found = engine.getClosest(number, this.asArray());
+				if(found != null && engine.approximatelyEqual(found, number, delta)){
 					result = numericList.remove(found);
 				}
 				else if(found == null){
@@ -252,7 +254,7 @@ public class NumericList  extends NumericStructure implements List<Number> {
 					boolean elementToRetain = false;
 					
 					for(Number passed: passedList){
-						if(element != null && passed != null && numericUtils.approximatelyEqual(element, passed, delta))
+						if(element != null && passed != null && engine.approximatelyEqual(element, passed, delta))
 							elementToRetain = true;	
 					}
 					

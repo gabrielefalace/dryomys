@@ -2,11 +2,9 @@ package util;
 
 
 import java.math.BigDecimal;
-
+import java.math.BigInteger;
 import org.eclipse.jdt.annotation.Nullable;
-
 import distance.DefaultDistanceProvider;
-import distance.NumericDistanceProvider;
 import exceptions.ExceptionFactory;
 import exceptions.UnsupportedTypeException;
 
@@ -18,7 +16,7 @@ import exceptions.UnsupportedTypeException;
  * 
  * @author Gabriele Falace
  */
-public final class NumericUtils implements Utils<Number> {
+public final class NumericUtils {
 	   
 	      
 	/**
@@ -31,97 +29,8 @@ public final class NumericUtils implements Utils<Number> {
 	 * this value means that a comparison operator has to be intended as strict (i.e. <= and >=)
 	 */
 	public static final boolean NON_STRICT = false;
-	
-	
-	/**
-	 * this variable holds an object that must provide the distance method used for all calculations
-	 */
-	private static NumericDistanceProvider distanceProvider = new DefaultDistanceProvider();
-	
-	
-	/**
-	 * singleton instance returned by the getInstance static method
-	 */
-	private static NumericUtils numericUtils = new NumericUtils(distanceProvider);
-	
-	
-	
-	/**
-	 * Private constructor, only used internally to create the unique instance.
-	 * @param aDistanceProvider the DistanceProvider, providing the distance method to be used in all operations.
-	 */
-	private NumericUtils(NumericDistanceProvider aDistanceProvider){
-		distanceProvider = aDistanceProvider;
-	}
-	
-	/**
-	 * Singleton getInstance method.
-	 * In any case it only returns a reference to the unique instance of this class.
-	 * The default DistanceProvider will be used.
-	 * @return the instance of NumericUtils
-	 */
-	public synchronized static NumericUtils getInstance(){
-		return numericUtils;
-	}
 
-	
-	/**
-	 * Accesses the instance of DistanceProvider in use
-	 * @return the DistanceProvider used
-	 */
-	public static final NumericDistanceProvider getDistanceProvider(){
-		return distanceProvider;
-	}
-	
-	/**
-	 * Sets the DistanceProvider to be used
-	 * @param aDistanceProvider the DistanceProvider to be set
-	 */
-	public static final void setDistanceProvider(NumericDistanceProvider aDistanceProvider){
-		distanceProvider = aDistanceProvider;
-	}
-	
-	
-	
-	
-	/**
-	 * Finds the Number in the array which is closer to another given Number, according to the DistanceProvider used.
-	 * @param number the number to be found
-	 * @param array the array of Number to search in
-	 * @return the Number in the array which has the minimum distance to the given number
-	 * @throws UnsupportedTypeException if Number used are not Float, Double or BigDecimal
-	 */
-	public final @Nullable Number getClosest(Number number, Number[] array) throws UnsupportedTypeException {
-		if(array.length==0){
-			throw new NullPointerException("method \"getClosest\" called on an empty structure");
-		}
-		else{
-			Number currentBest = array[0];
-			Number currentDist;
-			if(currentBest == null){
-				throw new NullPointerException("A null element was found in the collection!");
-			}
-			else{
-				currentDist = distanceProvider.distance(currentBest, number);
-				
-				for(Number elem: array){
-					if(elem == null){
-						throw new NullPointerException("A null element was found in the collection!");
-					}
-					else{
-						Number tmpDist = distanceProvider.distance(elem, number);
-						if(tmpDist != null && currentDist != null && lessThan(tmpDist, currentDist, STRICT)){
-							currentBest = elem;
-							currentDist = tmpDist;
-						}
-					}
-				}
-			}
 
-			return currentBest;
-		}
-	}
-	
 	
 	/**
 	 * Checks if the passed Number is exactly in this collection, using equals.
@@ -130,7 +39,7 @@ public final class NumericUtils implements Utils<Number> {
 	 * @param array the array in which the search is to be performed
 	 * @return true if the element is found, false otherwise
 	 */
-	public final boolean isExactlyIn(Number number, Number[] array){
+	public static final boolean isExactlyIn(Number number, Number[] array){
 		boolean outcome = false;
 		for(Number iter: array){
 			if(number.equals(iter)){
@@ -142,44 +51,6 @@ public final class NumericUtils implements Utils<Number> {
 	}
 	
 	
-	/**
-	 * Checks if two given Number are approximately equal, according to a given level of approximation, delta. 
-	 * Formally using the distance function n1 and n2 are approximatelyEqual if distance(n1,n2) <= delta.
-	 * @param n1 a Number 
-	 * @param n2 another Number
-	 * @param delta the tolerance for equality
-	 * @return true if the number are approximately equal
-	 * @throws UnsupportedTypeException when one of the arguments is not Float, Double or BigDecimal.
-	 */
-	public final boolean approximatelyEqual(Number n1, Number n2, Number delta) throws UnsupportedTypeException {
-		Number distance = distanceProvider.distance(n1, n2);
-		boolean result = false;
-		
-//		if(isFloat(n1) && isFloat(n2)){
-//			float distanceF = distance.floatValue();
-//			float deltaF = delta.floatValue();
-//			result = distanceF <= deltaF;
-//		}
-//		else if(isDouble(n1) && isDouble(n2)){
-//			double distanceD = distance.doubleValue();
-//			double deltaD = delta.doubleValue();
-//			result = distanceD <= deltaD;
-//		}
-//		else if(isBigDecimal(n1) && isBigDecimal(n2)){
-//			BigDecimal distanceBD = (BigDecimal) distance;
-//			BigDecimal deltaBD = (BigDecimal) delta;
-//			result = distanceBD.compareTo(deltaBD) <= 0;
-//		}
-//		else{
-//			throw ExceptionFactory.createUnsupportedNumberType(n1, n2);
-//		}
-		
-		if(distance != null){
-			result = this.lessThan(distance, delta, false);
-		}
-		
-		return result;
-	}
 
 
 	/**
@@ -190,30 +61,7 @@ public final class NumericUtils implements Utils<Number> {
 	 * @return a boolean given by strictness==true? n1>n2 : n1>=n2
 	 * @throws UnsupportedTypeException
 	 */
-	public final boolean greaterThan(Number n1, Number n2, boolean strictness)throws UnsupportedTypeException {
-//		boolean result = false;
-//		
-//		if((n1 instanceof Float) && (n2 instanceof Float)){
-//			float f1 = n1.floatValue();
-//			float f2 = n2.floatValue();
-//			result = strictness? f1>f2: f1>=f2;
-//		}
-//		else if((n1 instanceof Double) && (n2 instanceof Double)){
-//			double d1 = (Double)n1;
-//			double d2 = (Double)n2;
-//			result = strictness? d1>d2: d1>=d2;
-//		}
-//		else if((n1 instanceof BigDecimal) && (n2 instanceof BigDecimal)){
-//			BigDecimal bd1 = (BigDecimal)n1;
-//			BigDecimal bd2 = (BigDecimal)n2;
-//			int comparison = bd1.compareTo(bd2);
-//			result = strictness? comparison==1: comparison>=0;
-//		}
-//		else{
-//			throw ExceptionFactory.createUnsupportedNumberType(n1, n2);
-//		}
-//		return result;
-		
+	public static final boolean greaterThan(Number n1, Number n2, boolean strictness)throws UnsupportedTypeException {		
 		return !lessThan(n1, n2, !strictness);
 	}
 	
@@ -226,7 +74,7 @@ public final class NumericUtils implements Utils<Number> {
 	 * @return a boolean given by strictness==true? n1<n2 : n1<=n2
 	 * @throws UnsupportedTypeException
 	 */
-	public final boolean lessThan(Number n1, Number n2, boolean strictness)throws UnsupportedTypeException {
+	public static final boolean lessThan(Number n1, Number n2, boolean strictness)throws UnsupportedTypeException {
 		boolean result = false;
 		
 		if((n1 instanceof Float) && (n2 instanceof Float)){
@@ -259,7 +107,7 @@ public final class NumericUtils implements Utils<Number> {
 	 * @return true if the two Number are from the same class
 	 * @throws UnsupportedTypeException when Number is not Float, Double or BigDecimal
 	 */
-	public final boolean checkSameType(Number n1, Number n2) throws UnsupportedTypeException {
+	public static final boolean checkSameType(Number n1, Number n2) throws UnsupportedTypeException {
 		if(isProper(n1) && isProper(n2)){
 			
 			boolean result = false;
@@ -282,7 +130,7 @@ public final class NumericUtils implements Utils<Number> {
 	 * @param object the object to be checked
 	 * @return true if the object is one of the supported types
 	 */
-	public final boolean isProper(Number object){
+	public static final boolean isProper(Number object){ 
 		return isFloat(object) || isDouble(object) || isBigDecimal(object);
 	}
 	
@@ -292,7 +140,7 @@ public final class NumericUtils implements Utils<Number> {
 	 * @param object the Object to test
 	 * @return true if the argument is a Float
 	 */
-	public final boolean isFloat(Object object){
+	public static final boolean isFloat(Object object){
 		return object instanceof Float;
 	}
 	
@@ -302,7 +150,7 @@ public final class NumericUtils implements Utils<Number> {
 	 * @param object the Object to test
 	 * @return true if the argument is a Double
 	 */
-	public final boolean isDouble(Object object){
+	public static final boolean isDouble(Object object){
 		return object instanceof Double;
 	}
 
@@ -312,8 +160,16 @@ public final class NumericUtils implements Utils<Number> {
 	 * @param object the Object to test
 	 * @return true if the argument is a BigDecimal
 	 */
-	public final boolean isBigDecimal(Object object){
+	public static final boolean isBigDecimal(Object object){
 		return object instanceof BigDecimal;
 	}
 
+	
+	/*
+	 * FIXME This has been taken from outside ... 
+	 * 
+	 * sqrt-function copied of BigFunctionsClassrom 
+	 * From The Java Programmers Guide To numerical Computing (Ronald Mak, 2003)
+	 */
+	
 }

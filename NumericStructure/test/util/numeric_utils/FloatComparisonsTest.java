@@ -1,22 +1,19 @@
 package util.numeric_utils;
 
 import static org.junit.Assert.assertTrue;
+import static util.NumericUtils.*;
 
 import java.util.Arrays;
 import java.util.Collection;
-
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
-
-import util.NumericUtils;
 import exceptions.UnsupportedTypeException;
 
 @RunWith(Parameterized.class)
 public class FloatComparisonsTest {
 	
-	static NumericUtils numericUtils;
 	
 	float firstFloat, secondFloat;
 	
@@ -32,7 +29,7 @@ public class FloatComparisonsTest {
 	
 	@BeforeClass
 	public static void initialize(){
-		numericUtils = NumericUtils.getInstance();
+		
 	}
 	
 	
@@ -53,15 +50,15 @@ public class FloatComparisonsTest {
 	public void testFloatPrimitives(){
 		try{
 			if(strictness){
-				assertTrue(numericUtils.greaterThan(firstFloat, secondFloat, strictness));
-				assertTrue(numericUtils.lessThan(secondFloat, firstFloat, !strictness));
+				assertTrue(greaterThan(firstFloat, secondFloat, strictness));
+				assertTrue(lessThan(secondFloat, firstFloat, !strictness));
 			}
 			else if(!strictness){
 				
 				boolean equal = firstFloat==secondFloat;
 				
-				assertTrue(numericUtils.greaterThan(firstFloat, secondFloat, strictness) || equal);
-				assertTrue(numericUtils.lessThan(secondFloat, firstFloat, !strictness) || equal);
+				assertTrue(greaterThan(firstFloat, secondFloat, strictness) || equal);
+				assertTrue(lessThan(secondFloat, firstFloat, !strictness) || equal);
 			}
 		
 		}

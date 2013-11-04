@@ -1,10 +1,9 @@
 package numeric_core;
 
-import distance.NumericDistanceProvider;
 import exceptions.ExceptionFactory;
 import exceptions.InconsistentNumberTypeException;
 import exceptions.UnsupportedTypeException;
-import util.NumericUtils;
+import static util.NumericUtils.*;
 
 
 public abstract class NumericStructure {
@@ -18,15 +17,8 @@ public abstract class NumericStructure {
 	/**
 	 * a reference to the NumericUtils unique instance
 	 */
-	protected NumericUtils numericUtils = NumericUtils.getInstance();
-	
-	
-	/**
-	 * the DistanceProvider to be used
-	 */
-	protected NumericDistanceProvider distanceProvider = NumericUtils.getDistanceProvider();
-	
-	
+	protected NumericEngine engine = new NumericEngine();
+
 	
 	/**
 	 * Retrieves the current delta value
@@ -60,11 +52,11 @@ public abstract class NumericStructure {
 	 */
 	public boolean isTypeConsistent(Number number) throws InconsistentNumberTypeException, UnsupportedTypeException {
 		boolean result = false;
-		if(!numericUtils.isProper(number)){
+		if(!isProper(number)){
 			throw new UnsupportedTypeException(number);
 		}
 		else{
-			result = numericUtils.checkSameType(delta, number);
+			result = checkSameType(delta, number);
 		}
 		return result;
 	}

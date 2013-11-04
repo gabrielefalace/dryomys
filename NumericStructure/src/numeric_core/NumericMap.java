@@ -8,10 +8,9 @@ import java.util.Set;
 import org.eclipse.jdt.annotation.Nullable;
 
 import distance.DefaultDistanceProvider;
-import distance.NumericDistanceProvider;
+import distance.DistanceProvider;
 import exceptions.InconsistentNumberTypeException;
 import exceptions.UnsupportedTypeException;
-import util.NumericUtils;
 
 /*
  * FIXME remove the ability to hold null keys
@@ -30,12 +29,9 @@ public class NumericMap<V> extends NumericStructure implements Map<Number, V> {
 	 * @param delta the delta to be used for considering two elements equal
 	 * @param distanceProvider
 	 */
-	public NumericMap(Number delta, NumericDistanceProvider distanceProvider){
+	public NumericMap(Number delta, DistanceProvider<Number> distanceProvider){
 		super.delta = delta;
-		super.distanceProvider = distanceProvider;
-		NumericUtils.setDistanceProvider(distanceProvider);
-		super.numericUtils = NumericUtils.getInstance();
-		
+		super.engine.setDistanceProvider(distanceProvider);
 		this.numericMap = new HashMap<Number, V>();
 	}
 	
@@ -56,7 +52,7 @@ public class NumericMap<V> extends NumericStructure implements Map<Number, V> {
 
 
 	@Override
-	public Set<Entry<Number, V>> entrySet() {
+	public @Nullable Set<Entry<Number, V>> entrySet() {
 		return this.numericMap.entrySet();
 	}
 	
@@ -72,7 +68,7 @@ public class NumericMap<V> extends NumericStructure implements Map<Number, V> {
 	}
 
 	@Override
-	public Collection<V> values() {
+	public @Nullable Collection<V> values() {
 		return this.numericMap.values();
 	}
 	
@@ -91,7 +87,7 @@ public class NumericMap<V> extends NumericStructure implements Map<Number, V> {
 	@Override
 	public Set<Number> keySet() {
 		Set<Number> keySet = this.numericMap.keySet();
-		NumericSet numericSet = new NumericSet(this.delta, this.distanceProvider);
+		NumericSet numericSet = new NumericSet(this.delta, super.engine.getDistanceProvider());
 		numericSet.addAll(keySet);
 		return numericSet;
 	}
@@ -116,7 +112,7 @@ public class NumericMap<V> extends NumericStructure implements Map<Number, V> {
 			try{
 				Number keyNumber = (Number)key;
 				for(Number element: keySet){
-					if(numericUtils.approximatelyEqual(element, keyNumber, delta)) {
+					if(engine.approximatelyEqual(element, keyNumber, delta)) {
 						result = true;
 						break;
 					}
@@ -145,8 +141,8 @@ public class NumericMap<V> extends NumericStructure implements Map<Number, V> {
 			Number[] keys = keysAsArray();
 			
 			try{
-				Number closestKey = numericUtils.getClosest(passedKey, keys);
-				if(closestKey!=null && numericUtils.approximatelyEqual(closestKey, passedKey, delta)){
+				Number closestKey = engine.getClosest(passedKey, keys);
+				if(closestKey!=null && engine.approximatelyEqual(closestKey, passedKey, delta)){
 					result = this.numericMap.get(closestKey);
 				}
 			}
@@ -172,9 +168,9 @@ public class NumericMap<V> extends NumericStructure implements Map<Number, V> {
 			try {
 				if(isTypeConsistent(passedKey)){			
 					Number[] keys = keysAsArray();
-					Number closestKey = numericUtils.getClosest(passedKey, keys);
+					Number closestKey = engine.getClosest(passedKey, keys);
 					
-					if(closestKey!=null && numericUtils.approximatelyEqual(closestKey, passedKey, delta)){
+					if(closestKey!=null && engine.approximatelyEqual(closestKey, passedKey, delta)){
 						// in this case we have to replace closestKey, not to have 2 keys which are approximatelyEquals
 						result = this.numericMap.put(closestKey, value);
 					}
@@ -229,9 +225,9 @@ public class NumericMap<V> extends NumericStructure implements Map<Number, V> {
 		}
 		else{
 			try{
-				Number closestKey = numericUtils.getClosest(passedKey, keys);
+				Number closestKey = engine.getClosest(passedKey, keys);
 				
-				if(closestKey!=null && numericUtils.approximatelyEqual(closestKey, passedKey, delta)){
+				if(closestKey!=null && engine.approximatelyEqual(closestKey, passedKey, delta)){
 					result = this.numericMap.remove(closestKey);
 				}
 			}

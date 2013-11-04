@@ -8,13 +8,13 @@ import org.junit.Test;
 import core.TestDataFactory;
 import util.NumericUtils;
 import static org.junit.Assert.*;
+import static util.NumericUtils.*;
 
 
 
 public class TypeCheckingsTest {
 
-	static NumericUtils numericUtils;
-	
+
 	static BigDecimal bigDecimalObject;
 	static Double doubleObject;
 	static Float floatObject;
@@ -25,8 +25,7 @@ public class TypeCheckingsTest {
 	
 	@BeforeClass
 	public static void init(){
-		numericUtils = NumericUtils.getInstance();
-		
+	
 		bigDecimalObject = TestDataFactory.createBigDecimal();
 		doubleObject = TestDataFactory.createDouble();
 		floatObject = TestDataFactory.createFloat();
@@ -39,30 +38,30 @@ public class TypeCheckingsTest {
 	
 	@Test
 	public void testSupportedTypes(){
-		assertTrue(numericUtils.isProper(bigDecimalObject));
-		assertTrue(numericUtils.isProper(floatObject));
-		assertTrue(numericUtils.isProper(doubleObject));
-		assertTrue(numericUtils.isProper(doublePrimitive));
-		assertTrue(numericUtils.isProper(floatPrimitive));
+		assertTrue(isProper(bigDecimalObject));
+		assertTrue(isProper(floatObject));
+		assertTrue(isProper(doubleObject));
+		assertTrue(isProper(doublePrimitive));
+		assertTrue(isProper(floatPrimitive));
 	}
 	
 	
 	@Test
 	public void testDouble(){
-		assertTrue(numericUtils.isDouble(doubleObject));
-		assertTrue(numericUtils.isDouble(doublePrimitive));
+		assertTrue(isDouble(doubleObject));
+		assertTrue(isDouble(doublePrimitive));
 	}
 	
 	
 	@Test
 	public void testFloat(){
-		assertTrue(numericUtils.isFloat(floatObject));
-		assertTrue(numericUtils.isFloat(floatPrimitive));
+		assertTrue(isFloat(floatObject));
+		assertTrue(isFloat(floatPrimitive));
 	}
 	
 	@Test
 	public void tesBigDecimal(){
-		assertTrue(numericUtils.isBigDecimal(bigDecimalObject));
+		assertTrue(isBigDecimal(bigDecimalObject));
 	}
 
 }

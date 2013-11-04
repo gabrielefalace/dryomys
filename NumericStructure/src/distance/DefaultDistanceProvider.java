@@ -1,9 +1,10 @@
 package distance;
 
 import java.math.BigDecimal;
-
 import exceptions.ExceptionFactory;
 import exceptions.UnsupportedTypeException;
+
+import static util.NumericUtils.*;
 
 /**
  * This class simply provides an implementation of the distance between two Numbers as the absolute value of their difference.
@@ -11,35 +12,30 @@ import exceptions.UnsupportedTypeException;
  * @author gabriele
  *
  */
-public class DefaultDistanceProvider implements NumericDistanceProvider {
+public class DefaultDistanceProvider implements DistanceProvider<Number> {
 
 	/**
 	 * The distance as a simple difference, in absolute value
 	 */
 	@Override
-	public final strictfp Number distance(Number n1, Number n2) throws UnsupportedTypeException{
-		Number result;
+	public final Number distance(Number n1, Number n2) throws UnsupportedTypeException{
+		Number result = null;
+		BigDecimal bd1, bd2;
 		
-		if((n1 instanceof Float) && (n2 instanceof Float)){
-			float f1 = n1.floatValue();
-			float f2 = n2.floatValue();
-			float difference = Math.abs(f1 - f2);
-			result = new Float(difference);
-		}
-		else if((n1 instanceof Double) && (n2 instanceof Double)){
-			double d1 = (Double)n1;
-			double d2 = (Double)n2;
-			double difference = Math.abs(d1 - d2);
-			result = new Double(difference);
-		}
-		else if((n1 instanceof BigDecimal) && (n2 instanceof BigDecimal)){
-			BigDecimal bd1 = (BigDecimal)n1;
-			BigDecimal bd2 = (BigDecimal)n2;
+		
+		if((n1 instanceof BigDecimal) && (n2 instanceof BigDecimal)){
+			bd1 = (BigDecimal)n1;
+			bd2 = (BigDecimal)n2;
 			BigDecimal difference = bd1.subtract(bd2);
 			result = difference.abs();
 		}
-		else
+		else if(isProper(n1) && isProper(n2) && checkSameType(n1, n2)){
+			bd1 = new BigDecimal(n1.doubleValue());
+			bd2 = new BigDecimal(n2.doubleValue());
+		}
+		else{
 			throw ExceptionFactory.createUnsupportedNumberType(n1, n2);
+		}
 			
 		if(result == null){
 			throw new NullPointerException("The distance method from DefaultDistanceProvider computed a null distance");

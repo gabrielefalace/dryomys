@@ -1,6 +1,7 @@
 package util.numeric_utils;
 
 import static org.junit.Assert.*;
+import static util.NumericUtils.*;
 
 import java.math.BigDecimal;
 import java.util.Arrays;
@@ -12,13 +13,11 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 
 import exceptions.UnsupportedTypeException;
-import util.NumericUtils;
+
 
 @RunWith(Parameterized.class)
 public class ObjectComparisonsTest {
-	
-	static NumericUtils numericUtils;
-	
+
 	Number first, second;
 	
 	boolean strictness;
@@ -34,7 +33,7 @@ public class ObjectComparisonsTest {
 	
 	@BeforeClass
 	public static void initialize(){
-		numericUtils = NumericUtils.getInstance();
+		
 	}
 	
 	
@@ -59,15 +58,15 @@ public class ObjectComparisonsTest {
 	public void testObjects(){
 		try{
 			if(strictness){
-				assertTrue(numericUtils.greaterThan(first, second, strictness));
-				assertTrue(numericUtils.lessThan(second, first, !strictness));
+				assertTrue(greaterThan(first, second, strictness));
+				assertTrue(lessThan(second, first, !strictness));
 			}
 			else if(!strictness){
 				
 				boolean equal = first.equals(second);
 				
-				assertTrue(numericUtils.greaterThan(first, second, strictness) || equal);
-				assertTrue(numericUtils.lessThan(second, first, !strictness) || equal);
+				assertTrue(greaterThan(first, second, strictness) || equal);
+				assertTrue(lessThan(second, first, !strictness) || equal);
 			}
 		
 		}

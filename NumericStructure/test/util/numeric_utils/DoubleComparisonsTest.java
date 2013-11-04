@@ -1,22 +1,19 @@
 package util.numeric_utils;
 
 import static org.junit.Assert.assertTrue;
+import static util.NumericUtils.*;
 
 import java.util.Arrays;
 import java.util.Collection;
-
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
-
-import util.NumericUtils;
 import exceptions.UnsupportedTypeException;
 
 @RunWith(Parameterized.class)
 public class DoubleComparisonsTest {
 	
-	static NumericUtils numericUtils;
 	
 	double firstDouble, secondDouble;
 	
@@ -32,7 +29,7 @@ public class DoubleComparisonsTest {
 	
 	@BeforeClass
 	public static void initialize(){
-		numericUtils = NumericUtils.getInstance();
+		
 	}
 	
 	
@@ -53,15 +50,15 @@ public class DoubleComparisonsTest {
 	public void testDoublePrimitives(){
 		try{
 			if(strictness){
-				assertTrue(numericUtils.greaterThan(firstDouble, secondDouble, strictness));
-				assertTrue(numericUtils.lessThan(secondDouble, firstDouble, !strictness));
+				assertTrue(greaterThan(firstDouble, secondDouble, strictness));
+				assertTrue(lessThan(secondDouble, firstDouble, !strictness));
 			}
 			else if(!strictness){
 				
 				boolean equal = firstDouble==secondDouble;
 				
-				assertTrue(numericUtils.greaterThan(firstDouble, secondDouble, strictness) || equal);
-				assertTrue(numericUtils.lessThan(secondDouble, firstDouble, !strictness) || equal);
+				assertTrue(greaterThan(firstDouble, secondDouble, strictness) || equal);
+				assertTrue(lessThan(secondDouble, firstDouble, !strictness) || equal);
 			}
 		}
 		catch(UnsupportedTypeException unte){

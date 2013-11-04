@@ -2,7 +2,6 @@ package distance;
 
 import java.math.BigDecimal;
 import java.util.Iterator;
-
 import tuples.Tuple;
 import exceptions.ExceptionFactory;
 import exceptions.Messages;
@@ -14,58 +13,49 @@ import exceptions.UnsupportedTypeException;
  * @author gabriele
  *
  */
-public class ManhattanDistanceProvider implements TupleDistanceProvider {
+public class ManhattanDistanceProvider implements DistanceProvider<Tuple> {
 
 	/**
 	 * The Manhattan distance between the two Tuple
 	 */
 	@Override
 	public final strictfp Number distance(Tuple t1, Tuple t2) throws UnsupportedTypeException{
-		Number result;
+		Number result = new BigDecimal("0");
 		
 		Number n1 = t1.get(0);
 		Number n2 = t2.get(0);
-		Iterator<Number> i1 = t1.iterator(), i2 = t2.iterator();
 		
+		if(n1==null || n2==null){
+			throw ExceptionFactory.createUnsupportedNumberType(n1, n2);
+		}
+		
+		Iterator<Number> i1 = t1.iterator(), i2 = t2.iterator();
 		if(i1==null){
 			throw new NullPointerException(Messages.NULL_RECEIVED + "(while trying to obtain an iterator on tuple " + t1 + ")");
 		}
-		else if(i2==null){
+		if(i2==null){
 			throw new NullPointerException(Messages.NULL_RECEIVED + "(while trying to obtain an iterator on tuple " + t2 + ")");
 		}
-		else{
-			if((n1 instanceof Float) && (n2 instanceof Float)){
-				result = 0f;
-				while(i1.hasNext()){
-					float f1 = i1.next().floatValue();
-					float f2 = i2.next().floatValue();
-					float difference = Math.abs(f1 - f2);
-					result = result.floatValue() + difference;
-				}
+			
+		BigDecimal bd1, bd2, tmp = BigDecimal.ZERO;
+		while(i1.hasNext()){
+			if(!(n1 instanceof BigDecimal)){
+				bd1 = new BigDecimal(n1.doubleValue());
 			}
-			else if((n1 instanceof Double) && (n2 instanceof Double)){
-				result = 0d;
-				while(i1.hasNext()){
-					double f1 = i1.next().doubleValue();
-					double f2 = i2.next().doubleValue();
-					double difference = Math.abs(f1 - f2);
-					result = result.doubleValue() + difference;
-				}
+			else{
+				bd1 = (BigDecimal) i1.next();
 			}
-			else if((n1 instanceof BigDecimal) && (n2 instanceof BigDecimal)){
-				result = new BigDecimal("0");
-				BigDecimal tmp = BigDecimal.ZERO;
-				while(i1.hasNext()){
-					BigDecimal bd1 = (BigDecimal) i1.next();
-					BigDecimal bd2 = (BigDecimal) i2.next();
-					BigDecimal difference = bd1.subtract(bd2);
-					tmp = tmp.add(difference);
-				}
-				result = tmp;
+			if(!(n2 instanceof BigDecimal)){
+				bd2 = new BigDecimal(n2.doubleValue());
 			}
-			else
-				throw ExceptionFactory.createUnsupportedNumberType(n1, n2);
+			else{
+				bd2 = (BigDecimal) i2.next();
+			}
+			
+			BigDecimal difference = (bd1.subtract(bd2)).abs();
+			tmp = tmp.add(difference);
 		}
+		result = tmp;
 			
 		if(result == null){
 			throw new NullPointerException("The distance method from DefaultDistanceProvider computed a null distance");

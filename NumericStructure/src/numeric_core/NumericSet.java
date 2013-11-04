@@ -7,9 +7,10 @@ import java.util.Set;
 
 import org.eclipse.jdt.annotation.Nullable;
 
-import distance.NumericDistanceProvider;
 import util.NumericUtils;
+import distance.DistanceProvider;
 import exceptions.UnsupportedTypeException;
+
 
 /*
  * To comply with the Collection contract, when a UnsupportedNumberTypeException is thrown
@@ -27,7 +28,7 @@ import exceptions.UnsupportedTypeException;
  * @since 2013 October 1
  *
  */
-public class NumericSet implements Set<Number> {
+public class NumericSet extends NumericStructure implements Set<Number> {
 
 	/**
 	 * the delta defining the concept of approximately equal
@@ -41,12 +42,6 @@ public class NumericSet implements Set<Number> {
 	private Set<Number> numericSet;
 	
 	
-	/**
-	 * the unique instance of this class
-	 */
-	private NumericUtils numericUtils;
-	
-	
 	
 	/**
 	 * Constructor of the Set of Number
@@ -55,19 +50,18 @@ public class NumericSet implements Set<Number> {
 	public NumericSet(Number delta){
 		this.delta = delta;
 		this.numericSet = new HashSet<Number>();
-		this.numericUtils = NumericUtils.getInstance();
 	}
 
 	
 	/**
 	 * Constructor of the Set of Number
 	 * @param delta
+	 * @param distanceProvider
 	 */
-	public NumericSet(Number delta, NumericDistanceProvider distanceProvider){
+	public NumericSet(Number delta, DistanceProvider<Number> distanceProvider){
 		this.delta = delta;
 		this.numericSet = new HashSet<Number>();
-		NumericUtils.setDistanceProvider(distanceProvider);
-		this.numericUtils = NumericUtils.getInstance();
+		engine.setDistanceProvider(distanceProvider);
 	}
 	
 	
@@ -81,7 +75,7 @@ public class NumericSet implements Set<Number> {
 		if(element==null){
 			throw new NullPointerException();
 		}
-		else if(!numericUtils.isProper(element)){
+		else if(!NumericUtils.isProper(element)){
 			throw new ClassCastException();
 		}
 		else{
@@ -138,7 +132,7 @@ public class NumericSet implements Set<Number> {
 			Number floatArgument = (Number)element;
 			try{
 				for(Number number: numericSet){
-					if(number != null && numericUtils.approximatelyEqual(number, floatArgument, delta)){
+					if(number != null && engine.approximatelyEqual(number, floatArgument, delta)){
 						contains = true;
 						break;
 					}
@@ -200,7 +194,7 @@ public class NumericSet implements Set<Number> {
 				Iterator<Number> iterator = numericSet.iterator();
 				while(iterator.hasNext()){
 					Number element = iterator.next();
-					if(element != null && numericUtils.approximatelyEqual(element, passedFloat, delta)){
+					if(element != null && engine.approximatelyEqual(element, passedFloat, delta)){
 						iterator.remove();
 						outcome = true;
 						break;
@@ -263,7 +257,7 @@ public class NumericSet implements Set<Number> {
 						if(element == null && passed == null){
 							elementToRetain = true;
 						}
-						else if(element != null && passed != null && numericUtils.approximatelyEqual(element, passed, delta))
+						else if(element != null && passed != null && engine.approximatelyEqual(element, passed, delta))
 							elementToRetain = true;	
 					}
 					
@@ -305,7 +299,15 @@ public class NumericSet implements Set<Number> {
 	}
 	
 	
-	
+	/**
+	 * 
+	 * @param from
+	 * @param strictFrom
+	 * @param to
+	 * @param strictTo
+	 * @return
+	 * @throws UnsupportedTypeException
+	 */
 	public final NumericSet getByRange(Number from, boolean strictFrom, Number to, boolean strictTo) throws UnsupportedTypeException{
 		NumericSet result = new NumericSet(this.delta);
 		
@@ -316,8 +318,8 @@ public class NumericSet implements Set<Number> {
 				throw new NullPointerException();
 			}
 			else{
-				greaterThanFrom = numericUtils.greaterThan(element, from, strictFrom);
-				lessThanTo = numericUtils.lessThan(element, to, strictTo);
+				greaterThanFrom = NumericUtils.greaterThan(element, from, strictFrom);
+				lessThanTo = NumericUtils.lessThan(element, to, strictTo);
 				if(greaterThanFrom && lessThanTo)
 					result.numericSet.add(element);
 			}
@@ -363,4 +365,33 @@ public class NumericSet implements Set<Number> {
 		return result;
 	}
 
+	
+	/**
+	 * 
+	 * @param number
+	 * @return
+	 */
+	public boolean containsExactly(Number number){
+		return this.numericSet.contains(number);
+	}
+	
+	
+	/**
+	 * 
+	 * @param numbers
+	 * @return true if this set contains exactly all of the elements of the specified collection 
+	 */
+	public boolean containsAllExactly(Collection<Number> numbers){
+		return this.numericSet.containsAll(numbers);
+	}
+	
+	
+	/**
+	 * 
+	 * @param number
+	 * @return true if this set contained exactly the specified element 
+	 */
+	public boolean removeExactly(Number number){
+		return this.numericSet.remove(number);
+	}
 }
