@@ -5,7 +5,13 @@ import exceptions.InconsistentNumberTypeException;
 import exceptions.UnsupportedTypeException;
 import static util.NumericUtils.*;
 
-
+/**
+ * 
+ * TODO VERIFY THAT CLASSES EXTENDING THIS DO NOT SUPPORT NULL VALUES!
+ * 
+ * @author gabriele
+ *
+ */
 public abstract class NumericStructure {
 
 	/**
@@ -17,7 +23,7 @@ public abstract class NumericStructure {
 	/**
 	 * a reference to the NumericUtils unique instance
 	 */
-	protected NumericEngine engine = new NumericEngine();
+	protected NumericEngine engine = NumericEngine.getInstance();
 
 	
 	/**
@@ -31,6 +37,7 @@ public abstract class NumericStructure {
 	/**
 	 * Returns the data type allowed in this structure
 	 * @return a String that is the class name of the delta, which constraints the type of data this structure should hold
+	 * @throws UnsupportedTypeException
 	 */
 	public String getStructureType() throws UnsupportedTypeException {
 		String result = delta.getClass().getName();
@@ -49,6 +56,8 @@ public abstract class NumericStructure {
 	 * The given number is checked against the delta: since that is the first data on which this structure is built upon, the delta defines the type used (Float, Double or BigDecimal)
 	 * @param number the Object to check
 	 * @return true if the argument can be stored in this structure
+	 * @throws InconsistentNumberTypeException 
+	 * @throws UnsupportedTypeException 
 	 */
 	public boolean isTypeConsistent(Number number) throws InconsistentNumberTypeException, UnsupportedTypeException {
 		boolean result = false;

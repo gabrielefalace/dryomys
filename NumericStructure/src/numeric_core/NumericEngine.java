@@ -1,29 +1,43 @@
 package numeric_core;
 
 import org.eclipse.jdt.annotation.Nullable;
-
-import tuples.Tuple;
 import util.NumericUtils;
 import distance.DefaultDistanceProvider;
 import distance.DistanceProvider;
 import exceptions.UnsupportedTypeException;
 
 
-
+/**
+ * 
+ * @author gabriele
+ *
+ */
 public class NumericEngine {
 
+	
 	private DistanceProvider<Number> distanceProvider;
 	
 	
-	public NumericEngine(){
+	private static NumericEngine engine = new NumericEngine();
+	
+	
+	private NumericEngine(){
 		distanceProvider = new DefaultDistanceProvider();
-		/*
-		 * TODO default constructor
-		 */
+	}
+	
+	/**
+	 * 
+	 * @return the unique instance of NumericEngine
+	 */
+	public static synchronized NumericEngine getInstance(){
+		return engine;
 	}
 	
 	
-	
+	/**
+	 * 
+	 * @param aProvider
+	 */
 	public NumericEngine(DistanceProvider<Number> aProvider){
 		distanceProvider = aProvider;
 	}
@@ -32,7 +46,7 @@ public class NumericEngine {
 	
 	/**
 	 * 
-	 * @return
+	 * @return the DistanceProvider currently set
 	 */
 	public DistanceProvider<Number> getDistanceProvider() {
 		return distanceProvider;

@@ -4,11 +4,8 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
-
 import org.eclipse.jdt.annotation.Nullable;
-
 import util.NumericUtils;
-import distance.DistanceProvider;
 import exceptions.UnsupportedTypeException;
 
 
@@ -52,18 +49,6 @@ public class NumericSet extends NumericStructure implements Set<Number> {
 		this.numericSet = new HashSet<Number>();
 	}
 
-	
-	/**
-	 * Constructor of the Set of Number
-	 * @param delta
-	 * @param distanceProvider
-	 */
-	public NumericSet(Number delta, DistanceProvider<Number> distanceProvider){
-		this.delta = delta;
-		this.numericSet = new HashSet<Number>();
-		engine.setDistanceProvider(distanceProvider);
-	}
-	
 	
 	/**
 	 * Adds the element to this Set. Since duplicates are not allowed, it checks if the collection contains an approximatelyEqual element. 
@@ -305,7 +290,7 @@ public class NumericSet extends NumericStructure implements Set<Number> {
 	 * @param strictFrom
 	 * @param to
 	 * @param strictTo
-	 * @return
+	 * @return the Number elements in the specified range
 	 * @throws UnsupportedTypeException
 	 */
 	public final NumericSet getByRange(Number from, boolean strictFrom, Number to, boolean strictTo) throws UnsupportedTypeException{
@@ -369,7 +354,7 @@ public class NumericSet extends NumericStructure implements Set<Number> {
 	/**
 	 * 
 	 * @param number
-	 * @return
+	 * @return true if this set contains exactly the specified element 
 	 */
 	public boolean containsExactly(Number number){
 		return this.numericSet.contains(number);

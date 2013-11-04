@@ -2,9 +2,6 @@ package util;
 
 
 import java.math.BigDecimal;
-import java.math.BigInteger;
-import org.eclipse.jdt.annotation.Nullable;
-import distance.DefaultDistanceProvider;
 import exceptions.ExceptionFactory;
 import exceptions.UnsupportedTypeException;
 

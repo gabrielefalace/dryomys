@@ -1,9 +1,6 @@
 package util;
 
-import org.eclipse.jdt.annotation.Nullable;
 import tuples.Tuple;
-import distance.ManhattanDistanceProvider;
-import exceptions.UnsupportedTypeException;
 
 
 /**
@@ -17,7 +14,7 @@ public class TupleUtils {
 	 * 
 	 * @param number
 	 * @param array
-	 * @return
+	 * @return true if the Tuple is exactly in the given array
 	 */
 	public static boolean isExactlyIn(Tuple number, Tuple[] array) {
 		boolean result = false;
@@ -34,7 +31,7 @@ public class TupleUtils {
 	/**
 	 * 
 	 * @param tuple
-	 * @return
+	 * @return true if every Number in the Tuple is Float, Double or BigDecimal and all the elements are of the same class.
 	 */
 	public static boolean isProper(Tuple tuple){
 		boolean result = false;
@@ -47,7 +44,7 @@ public class TupleUtils {
 				result = true;
 				String className = first.getClass().getName();
 				for(Number number: tuple){
-					if(!className.equals(number.getClass().getName())){
+					if(!className.equals(number.getClass().getName()) || !NumericUtils.isProper(number)){
 						result = false;
 						break;
 					}

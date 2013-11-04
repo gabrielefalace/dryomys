@@ -4,16 +4,16 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
-
 import org.eclipse.jdt.annotation.Nullable;
-
-import distance.DefaultDistanceProvider;
-import distance.DistanceProvider;
 import exceptions.InconsistentNumberTypeException;
+import exceptions.Messages;
 import exceptions.UnsupportedTypeException;
 
-/*
- * FIXME remove the ability to hold null keys
+/**
+ * 
+ * @author gabriele
+ *
+ * @param <V>
  */
 public class NumericMap<V> extends NumericStructure implements Map<Number, V> {
 
@@ -27,20 +27,10 @@ public class NumericMap<V> extends NumericStructure implements Map<Number, V> {
 	/**
 	 * Constructs the NumericMap, with a given delta and a distance provider
 	 * @param delta the delta to be used for considering two elements equal
-	 * @param distanceProvider
-	 */
-	public NumericMap(Number delta, DistanceProvider<Number> distanceProvider){
-		super.delta = delta;
-		super.engine.setDistanceProvider(distanceProvider);
-		this.numericMap = new HashMap<Number, V>();
-	}
-	
-	/**
-	 * Constructs the NumericMap, with a given delta and a 'default' distance provider
-	 * @param delta the delta to be used for considering two elements equal
 	 */
 	public NumericMap(Number delta){
-		this(delta, new DefaultDistanceProvider());
+		super.delta = delta;
+		this.numericMap = new HashMap<Number, V>();
 	}
 	
 	
@@ -87,7 +77,7 @@ public class NumericMap<V> extends NumericStructure implements Map<Number, V> {
 	@Override
 	public Set<Number> keySet() {
 		Set<Number> keySet = this.numericMap.keySet();
-		NumericSet numericSet = new NumericSet(this.delta, super.engine.getDistanceProvider());
+		NumericSet numericSet = new NumericSet(this.delta);
 		numericSet.addAll(keySet);
 		return numericSet;
 	}
@@ -112,7 +102,10 @@ public class NumericMap<V> extends NumericStructure implements Map<Number, V> {
 			try{
 				Number keyNumber = (Number)key;
 				for(Number element: keySet){
-					if(engine.approximatelyEqual(element, keyNumber, delta)) {
+					if(element == null){
+						throw new NullPointerException(Messages.NULL_IN_COLLECTION);
+					}
+					else if(engine.approximatelyEqual(element, keyNumber, delta)) {
 						result = true;
 						break;
 					}
@@ -204,7 +197,12 @@ public class NumericMap<V> extends NumericStructure implements Map<Number, V> {
 		Set<Number> keys = (Set<Number>) argMap.keySet();
 		for(Number number: keys){
 			V value = argMap.get(number);
-			this.put(number, value);
+			if(number != null && value != null){
+				this.put(number, value);
+			}
+			else{
+				throw new NullPointerException(Messages.NULL_ARGUMENT);
+			}
 		}
 	}
 
@@ -247,7 +245,12 @@ public class NumericMap<V> extends NumericStructure implements Map<Number, V> {
 	private final Number[] keysAsArray(){
 		Number[] result = new Number[numericMap.size()];
 		result = numericMap.keySet().toArray(result);
-		return result;
+		if(result != null){
+			return result;
+		}
+		else{
+			throw new NullPointerException(Messages.NULL_RECEIVED);
+		}
 	}
 
 	
@@ -259,6 +262,14 @@ public class NumericMap<V> extends NumericStructure implements Map<Number, V> {
 			V v = numericMap.get(k);
 			result.append(k.toString() + " : " + v + "\n");
 		}
-		return result.toString();
+		
+		String str = result.toString();
+		
+		if(str != null){
+			return str;
+		}
+		else{
+			throw new NullPointerException(Messages.NULL_RECEIVED);
+		}
 	}
 }

@@ -9,6 +9,11 @@ import tuples.Tuple;
 import util.NumericUtils;
 import exceptions.UnsupportedTypeException;
 
+/**
+ * 
+ * @author gabriele
+ *
+ */
 public class TupleEngine {
 
 	
@@ -16,7 +21,9 @@ public class TupleEngine {
 
 	private DistanceProvider<Tuple> distanceProvider;
 	
-	
+	/**
+	 * 
+	 */
 	public TupleEngine(){
 		distanceProvider = new ManhattanDistanceProvider();
 		/*
@@ -25,7 +32,10 @@ public class TupleEngine {
 	}
 	
 	
-	
+	/**
+	 * 
+	 * @param aProvider
+	 */
 	public TupleEngine(DistanceProvider<Tuple> aProvider){
 		distanceProvider = aProvider;
 	}

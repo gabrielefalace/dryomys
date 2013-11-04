@@ -5,31 +5,31 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
-
 import org.eclipse.jdt.annotation.Nullable;
-
-import distance.DistanceProvider;
 import exceptions.Messages;
 import exceptions.UnsupportedTypeException;
 
 
-/*
+/**
+ * 
  * TODO Have to do isProper type checking in many places!
+ * 
+ * @author gabriele
+ *
  */
 public class NumericList  extends NumericStructure implements List<Number> {
 
 	
 	private List<Number> numericList = new ArrayList<Number>();
 	
-	
-	public NumericList(Number delta, DistanceProvider<Number> distanceProvider){
-		super.delta = delta;
-		super.engine.setDistanceProvider(distanceProvider);
-	}
-	
+	/**
+	 * 
+	 * @param delta
+	 */
 	public NumericList(Number delta){
 		super.delta = delta;
 	}
+
 	
 	@Override
 	public boolean contains(@Nullable Object o) {
@@ -296,7 +296,10 @@ public class NumericList  extends NumericStructure implements List<Number> {
 		return numericList.toArray(a);
 	}
 	
-	
+	/**
+	 * 
+	 * @return this List as an Array
+	 */
 	public Number[] asArray(){
 		Number[] result = new Number[numericList.size()];
 		result = numericList.toArray(result);
