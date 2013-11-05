@@ -1,5 +1,7 @@
 package numeric_core;
 
+import static util.NumericUtils.*;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
@@ -306,6 +308,35 @@ public class NumericList  extends NumericStructure implements List<Number> {
 		if(result == null){
 			result = new Number[0];
 		}
+		return result;
+	}
+	
+	/**
+	 * 
+	 * @param from
+	 * @param strictFrom
+	 * @param to
+	 * @param strictTo
+	 * @return
+	 * @throws UnsupportedTypeException
+	 */
+	public final NumericList getByRange(Number from, boolean strictFrom, Number to, boolean strictTo) throws UnsupportedTypeException{
+		NumericList result = new NumericList(this.delta);
+		
+		boolean greaterThanFrom, lessThanTo;
+		
+		for(Number element: numericList){
+			if(element == null){
+				throw new NullPointerException();
+			}
+			else{
+				greaterThanFrom = greaterThan(element, from, strictFrom);
+				lessThanTo = lessThan(element, to, strictTo);
+				if(greaterThanFrom && lessThanTo)
+					result.numericList.add(element);
+			}
+		}
+		
 		return result;
 	}
  
