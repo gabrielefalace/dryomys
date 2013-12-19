@@ -28,12 +28,9 @@
 		<style type="text/css">
 			/* @font-face { font-family: myFont; src: url('negotiate.ttf'); } */ 
 			/* body {font-family: myFont;} */
-			@media screen and (max-width: 320px) {
-				@-ms-viewport { width: 320px; }
-			}
-			 
-			@media screen and (min-width: 768px) and (max-width: 959px) {
-				@-ms-viewport { width: 768px; }
+			@media screen and (max-device-width: 600px) {
+				p{width:100%;}
+				#mainDiv{margin-left:2%;}
 			}
 			body {font-family: Segoe UI, sans-serif; background-color: #FAFAFA;}
 			p{ width: 75%;  line-height: 20px; font-weight: 100; font-size: 14px; color: black; margin-top: 0px; margin-bottom: 20px; text-align:justify}
