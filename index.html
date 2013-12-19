@@ -1,8 +1,95 @@
+<!DOCTYPE html>
 <html>
-    <head>
-        <title>Driomio</title>
-    </head>
-    <body>
-        <h1>Hello Driomio!</h1>
-    </body>
-</hmtl>
+	<head>
+		<meta charset="ISO-8859-1">
+		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+		<script type="text/javascript">
+			var srcRepo = "https://github.com/gabrielefalace/numeric";
+			var orange = "#CC0011", gray = "#827C7D", bold = "800", light="200";
+			var texts = ["txtFeatures", "txtAuthor", "txtHome"], heads = ["Features", "Author", "Home"];
+			function highlight(headName){
+				$("#" + headName).css("color", orange).css("font-weight", bold);
+				$("#txt" + headName).show();
+				$.map(heads, function(element, index){
+					if(element !== headName){
+						$("#" + element).css("color", gray).css("font-weight", light);
+						$("#txt" + element).hide();
+					}
+				});
+			}
+			$(function(){	//document ready, start here ... 
+				$("#Home").click(function(){ highlight("Home"); });
+				$("#Features").click(function(){ highlight("Features") });
+				$("#Author").click(function(){ highlight("Author") });
+				$("#download").click(function() { window.location=srcRepo; });
+				$("#Home").click();
+			});
+		</script>
+		<style type="text/css">
+			@font-face { font-family: myFont; src: url('negotiate.ttf'); }
+			body {font-family: myFont, sans-serif; background-color: #FAFAFA;}
+			p{ width: 75%;  line-height: 20px; font-weight: 100; font-size: 14px; color: black; margin-top: 0px; margin-bottom: 20px;}
+			a{text-decoration: underline; color: #CC0011; }
+			.buttonLike { cursor: pointer; color: #827C7D; margin-right: 15px; font-size: 14px; font-weight: 100;}
+			.buttonLike:hover { text-decoration: underline; } 
+			.feature {margin-bottom: 40px; }
+			.fakeButton {
+				padding-left: 10px; padding-right: 10px;
+				font-family: consolas, courier new, monospace; font-weight: 100; font-size: 14px;
+				color: white; background-color: #CC0011; cursor: pointer;
+			}
+			.fakeButton:hover { background-color: #FF0000; color: white; }
+			.alert{background-color: #FFCC99; color: #FF0000; border: 1px solid #FF0000; padding: 10px;}
+			#title { color: #CC0011; font-weight: 500; font-size: 26px; margin-right: 100px;}
+			#mainDiv {margin-left: 25%; margin-top: 2%; }
+		</style>
+		<title>Dryomys</title>
+	</head>
+	
+	<body>
+		<div id="mainDiv">
+			<table style="width: 70%">
+				<tr>
+					<td><span id="title">Dryomys - java numeric tools</span></td>
+					<td style="text-align: center;" class="fakeButton" id="jar" onclick="javascript:alert('not yet available');"><span> jar </span></td>
+					<td style="text-align: center;" class="fakeButton" id="javadoc" onclick="javascript:alert('not yet available');"><span > doc </span></td>
+					<td style="text-align: center;" class="fakeButton" id="download" ><span > src </span></td>
+				</tr>
+			</table>
+			<table>
+				<tr align="left">
+					<td> <div id="Home" class="buttonLike"> About </div> </td>
+					<td> <div id="Features" class="buttonLike"> Resources </div> </td>
+					<td> <div id="Author" class="buttonLike">Author</div> </td>
+				</tr>
+			</table>
+			<table style="width: 70%; margin-top: 25px;">
+				<tr>
+					<td>
+						<p class="alert"> <b>WARNING!</b> This software is still under development! <br/> First release expected in spring of 2014</p>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<div id="txtHome">
+							<p>
+							As is widely recognized, primitives data types should not be used for numerical data in contexts where precision matters.						
+							This project aims to provide an high-quality library for processing numerical data and storing numbers in ad-hoc data structures. 
+							These data structures also have built-in operation based on approximations...
+							</p>
+						</div>
+						<div id="txtFeatures">
+							<p class="feature"> Lasest version at this moment is: <u> unreleased </u> <br/>
+							Use the buttons in the top-right corner to download the source code and the JAR library or to reach the javadoc page for the project <br/>
+							Download the <a href="./index.html">UML diagrams</a> <br/>
+							Download the <a href="./index.html"> Guide with examples </a> </p>
+						</div>
+						<div id="txtAuthor">
+							<p> Gabriele Falace </p>
+						</div>
+					</td>
+				</tr>
+			</table> 
+		</div>
+	</body>
+</html>
