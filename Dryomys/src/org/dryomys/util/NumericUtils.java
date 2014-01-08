@@ -23,7 +23,7 @@ public final class NumericUtils {
 
     /**
      * this value means that a comparison operator has to be intended as strict
-     * (i.e. < and >)
+     * (i.e. "<" and ">")
      */
     public static final boolean STRICT = true;
 
