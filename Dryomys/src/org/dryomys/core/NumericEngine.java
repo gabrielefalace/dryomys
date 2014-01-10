@@ -4,6 +4,7 @@ import static org.dryomys.util.GenericUtils.*;
 
 import org.dryomys.distance.DefaultDistanceProvider;
 import org.dryomys.distance.DistanceProvider;
+import org.dryomys.exceptions.InconsistentNumberTypeException;
 import org.dryomys.exceptions.NullArgumentException;
 import org.dryomys.exceptions.NullUnsupportedException;
 import org.dryomys.exceptions.UnsupportedTypeException;
@@ -62,10 +63,11 @@ public class NumericEngine {
      *         given number
      * @throws UnsupportedTypeException
      *             if Number used are not Float, Double or BigDecimal
+     * @throws InconsistentNumberTypeException 
      */
     @Nullable
     public final Number getClosest(Number number, Number[] array)
-            throws UnsupportedTypeException {
+            throws UnsupportedTypeException, InconsistentNumberTypeException {
         if (array.length == 0) {
             throw new NullArgumentException();
         }
@@ -101,9 +103,10 @@ public class NumericEngine {
      * @return true if the number are approximately equal
      * @throws UnsupportedTypeException
      *             when one of the arguments is not Float, Double or BigDecimal.
+     * @throws InconsistentNumberTypeException 
      */
     public final boolean approximatelyEqual(Number n1, Number n2, Number delta)
-            throws UnsupportedTypeException {
+            throws UnsupportedTypeException, InconsistentNumberTypeException{
         Number distance = distanceProvider.distance(n1, n2);
         boolean result = false;
         if (distance != null) {

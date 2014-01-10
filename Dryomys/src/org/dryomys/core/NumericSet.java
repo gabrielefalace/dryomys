@@ -6,6 +6,8 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
+
+import org.dryomys.exceptions.InconsistentNumberTypeException;
 import org.dryomys.exceptions.InvalidElementException;
 import org.dryomys.exceptions.NullArgumentException;
 import org.dryomys.exceptions.NullUnsupportedException;
@@ -117,7 +119,7 @@ public class NumericSet extends NumericStructure implements Set<Number> {
                         break;
                     }
                 }
-            } catch (UnsupportedTypeException unte) {
+            } catch (UnsupportedTypeException | InconsistentNumberTypeException unte) {
                 throw new InvalidElementException(unte);
             }
         }
@@ -175,7 +177,7 @@ public class NumericSet extends NumericStructure implements Set<Number> {
                         break;
                     }
                 }
-            } catch (UnsupportedTypeException unte) {
+            } catch (UnsupportedTypeException | InconsistentNumberTypeException unte) {
                 throw new InvalidElementException(unte);
             }
         }
@@ -230,7 +232,7 @@ public class NumericSet extends NumericStructure implements Set<Number> {
                     outcome = true;
                 }
             }
-        } catch (UnsupportedTypeException unte) {
+        } catch (UnsupportedTypeException | InconsistentNumberTypeException unte) {
             throw new InvalidElementException(unte);
         }
 
@@ -259,9 +261,10 @@ public class NumericSet extends NumericStructure implements Set<Number> {
      * @param strictTo
      * @return the Number elements in the specified range
      * @throws UnsupportedTypeException
+     * @throws InconsistentNumberTypeException 
      */
     public final NumericSet getByRange(Number from, boolean strictFrom,
-            Number to, boolean strictTo) throws UnsupportedTypeException {
+            Number to, boolean strictTo) throws UnsupportedTypeException, InconsistentNumberTypeException{
         NumericSet result = new NumericSet(this.delta);
 
         boolean greaterThanFrom, lessThanTo;

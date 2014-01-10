@@ -107,7 +107,7 @@ public class NumericMap<V> extends NumericStructure implements Map<Number, V> {
                         break;
                     }
                 }
-            } catch (UnsupportedTypeException ute) {
+            } catch (UnsupportedTypeException | InconsistentNumberTypeException ute) {
                 throw new InvalidElementException(ute);
             }
         }
@@ -133,7 +133,7 @@ public class NumericMap<V> extends NumericStructure implements Map<Number, V> {
                 if (closestKey != null && engine.approximatelyEqual(closestKey, passedKey, delta)) {
                     result = this.numericMap.get(closestKey);
                 }
-            } catch (UnsupportedTypeException ute) {
+            } catch (UnsupportedTypeException | InconsistentNumberTypeException ute) {
                 throw new InvalidElementException(ute);
             }
         }
@@ -223,7 +223,7 @@ public class NumericMap<V> extends NumericStructure implements Map<Number, V> {
                                 delta)) {
                     result = this.numericMap.remove(closestKey);
                 }
-            } catch (UnsupportedTypeException e) {
+            } catch (UnsupportedTypeException | InconsistentNumberTypeException e) {
                 throw new InvalidElementException(e);
             }
         }

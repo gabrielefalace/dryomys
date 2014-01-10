@@ -9,6 +9,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 
+import org.dryomys.exceptions.InconsistentNumberTypeException;
 import org.dryomys.exceptions.InvalidElementException;
 import org.dryomys.exceptions.NullArgumentException;
 import org.dryomys.exceptions.NullComputedException;
@@ -47,7 +48,7 @@ public class NumericList extends NumericStructure implements List<Number> {
                         break;
                     }
                 }
-            } catch (UnsupportedTypeException unte) {
+            } catch (UnsupportedTypeException | InconsistentNumberTypeException unte) {
                 throw new InvalidElementException(unte);
             }
         }
@@ -121,7 +122,7 @@ public class NumericList extends NumericStructure implements List<Number> {
                         position++;
                     }
                 }
-            } catch (UnsupportedTypeException unte) {
+            } catch (UnsupportedTypeException | InconsistentNumberTypeException unte) {
                 throw new InvalidElementException(unte);
             }
             return result;
@@ -158,7 +159,7 @@ public class NumericList extends NumericStructure implements List<Number> {
                 }
                 // does not break on first occurrence, but goes through all the
                 // iterations.
-            } catch (UnsupportedTypeException unte) {
+            } catch (UnsupportedTypeException | InconsistentNumberTypeException unte) {
                 throw new InvalidElementException(unte);
             }
             return result;
@@ -194,7 +195,7 @@ public class NumericList extends NumericStructure implements List<Number> {
                 if (engine.approximatelyEqual(found, number, delta)) {
                     result = numericList.remove(found);
                 }
-            } catch (UnsupportedTypeException unte) {
+            } catch (UnsupportedTypeException | InconsistentNumberTypeException unte) {
                 throw new InvalidElementException(unte);
             }
         }
@@ -241,7 +242,7 @@ public class NumericList extends NumericStructure implements List<Number> {
                     outcome = true;
                 }
             }
-        } catch (UnsupportedTypeException unte) {
+        } catch (UnsupportedTypeException | InconsistentNumberTypeException unte) {
             throw new InvalidElementException(unte);
         }
         return outcome;
@@ -299,7 +300,7 @@ public class NumericList extends NumericStructure implements List<Number> {
      * @throws UnsupportedTypeException
      */
     public final NumericList getByRange(Number from, boolean strictFrom,
-            Number to, boolean strictTo) throws UnsupportedTypeException {
+            Number to, boolean strictTo) throws UnsupportedTypeException, InconsistentNumberTypeException {
         NumericList result = new NumericList(this.delta);
 
         boolean greaterThanFrom, lessThanTo;

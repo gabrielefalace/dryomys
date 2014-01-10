@@ -1,7 +1,9 @@
 package org.dryomys.util;
 
 import java.math.BigDecimal;
+
 import org.dryomys.exceptions.ExceptionFactory;
+import org.dryomys.exceptions.InconsistentNumberTypeException;
 import org.dryomys.exceptions.UnsupportedTypeException;
 
 /**
@@ -65,9 +67,11 @@ public final class NumericUtils {
      *            if set to true, it has a ">" semantic, otherwise it means ">="
      * @return a boolean given by strictness==true? n1>n2 : n1>=n2
      * @throws UnsupportedTypeException
+     * @throws InconsistentNumberTypeException 
      */
     public static final boolean greaterThan(Number n1, Number n2,
-            boolean strictness) throws UnsupportedTypeException {
+            boolean strictness) throws UnsupportedTypeException,
+            InconsistentNumberTypeException {
         return !lessThan(n1, n2, !strictness);
     }
 
@@ -82,11 +86,25 @@ public final class NumericUtils {
      *            if set to true, it has a "<" semantic, otherwise it means "<="
      * @return a boolean given by strictness==true? n1<n2 : n1<=n2
      * @throws UnsupportedTypeException
+     * @throws InconsistentNumberTypeException 
      */
-    public static final boolean lessThan(Number n1, Number n2, boolean strictness) throws UnsupportedTypeException {
+    public static final boolean lessThan(Number n1, Number n2,
+            boolean strictness) throws UnsupportedTypeException,
+            InconsistentNumberTypeException {
         boolean result = false;
-        BigDecimal bd1 = (BigDecimal) n1;
-        BigDecimal bd2 = (BigDecimal) n2;
+        if (!checkSameType(n1, n2)) {
+            throw new InconsistentNumberTypeException();
+        }
+
+        BigDecimal bd1, bd2;
+
+        if (n1 instanceof BigDecimal) {
+            bd1 = (BigDecimal) n1;
+            bd2 = (BigDecimal) n2;
+        } else {
+            bd1 = new BigDecimal(n1.doubleValue());
+            bd2 = new BigDecimal(n2.doubleValue());
+        }
         int comparison = bd1.compareTo(bd2);
         result = strictness ? comparison == -1 : comparison <= 0;
         return result;

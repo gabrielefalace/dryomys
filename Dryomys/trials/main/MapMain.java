@@ -5,11 +5,12 @@ import java.util.Map;
 
 import org.dryomys.core.NumericMap;
 import org.dryomys.core.NumericSet;
+import org.dryomys.exceptions.InconsistentNumberTypeException;
 import org.dryomys.exceptions.UnsupportedTypeException;
 
 public class MapMain {
 	
-	public static void main(String ... args) throws UnsupportedTypeException{
+	public static void main(String ... args) throws UnsupportedTypeException, InconsistentNumberTypeException{
 		
 		Double delta = 0.00001;
 		

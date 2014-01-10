@@ -85,7 +85,7 @@ public abstract class NumericStructure {
      */
     public static final boolean isToRetain(Number element,
             Collection<Number> collection, Number delta)
-            throws UnsupportedTypeException {
+            throws UnsupportedTypeException, InconsistentNumberTypeException{
         boolean result = false;
         for (Number passed : collection) {
             if (engine.approximatelyEqual(element, passed, delta)) {
