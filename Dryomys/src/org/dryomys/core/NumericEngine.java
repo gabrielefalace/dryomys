@@ -103,7 +103,7 @@ public class NumericEngine {
      * @return true if the number are approximately equal
      * @throws UnsupportedTypeException
      *             when one of the arguments is not Float, Double or BigDecimal.
-     * @throws InconsistentNumberTypeException 
+     * @throws InconsistentNumberTypeException if the two Number have incompatible types
      */
     public final boolean approximatelyEqual(Number n1, Number n2, Number delta)
             throws UnsupportedTypeException, InconsistentNumberTypeException{

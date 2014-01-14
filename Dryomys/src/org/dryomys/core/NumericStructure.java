@@ -61,11 +61,10 @@ public abstract class NumericStructure {
      * @param number
      *            the Object to check
      * @return true if the argument can be stored in this structure
-     * @throws InconsistentNumberTypeException
-     * @throws UnsupportedTypeException
+     * @throws UnsupportedTypeException when an unsupported type is used
      */
     public boolean isTypeConsistent(Number number)
-            throws InconsistentNumberTypeException, UnsupportedTypeException {
+            throws UnsupportedTypeException {
         boolean result = false;
         if (!isProper(number)) {
             throw new UnsupportedTypeException(number);
@@ -77,14 +76,13 @@ public abstract class NumericStructure {
 
     /**
      * 
-     * @param element
-     * @param collection
-     * @param engine
-     * @return boolean
-     * @throws UnsupportedTypeException
+     * @param element the element that we check
+     * @param collection the collection against which the element is checked
+     * @return boolean true if the element has to be retained, false otherwise
+     * @throws UnsupportedTypeException if an unsupported type is used
+     * @throws InconsistentNumberTypeException if two incompatible type Numbers get compared
      */
-    public static final boolean isToRetain(Number element,
-            Collection<Number> collection, Number delta)
+    public static final boolean isToRetain(Number element, Collection<Number> collection, Number delta)
             throws UnsupportedTypeException, InconsistentNumberTypeException{
         boolean result = false;
         for (Number passed : collection) {
