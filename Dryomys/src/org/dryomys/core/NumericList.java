@@ -56,22 +56,22 @@ public class NumericList extends NumericStructure implements List<Number> {
     }
 
     @Override
-    public boolean add(Number e) {
+    public boolean add(@Nullable Number e) {
         return numericList.add(e);
     }
 
     @Override
-    public void add(int index, Number element) {
+    public void add(int index, @Nullable Number element) {
         numericList.add(index, element);
     }
 
     @Override
-    public boolean addAll(Collection<? extends Number> c) {
+    public boolean addAll(@Nullable Collection<? extends Number> c) {
         return numericList.addAll(c);
     }
 
     @Override
-    public boolean addAll(int index, Collection<? extends Number> c) {
+    public boolean addAll(int index, @Nullable Collection<? extends Number> c) {
         return numericList.addAll(c);
     }
 
@@ -250,7 +250,7 @@ public class NumericList extends NumericStructure implements List<Number> {
 
     @Override
     @Nullable
-    public Number set(int index, Number element) {
+    public Number set(int index, @Nullable Number element) {
         return numericList.set(index, element);
     }
 
@@ -273,7 +273,7 @@ public class NumericList extends NumericStructure implements List<Number> {
 
     @Override
     @Nullable
-    public <T> T[] toArray(T[] a) {
+    public <T> T[] toArray(@Nullable T[] a) {
         return numericList.toArray(a);
     }
 

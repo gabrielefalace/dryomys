@@ -310,7 +310,7 @@ public class NumericSet extends NumericStructure implements Set<Number> {
 
     @Override
     @Nullable
-    public <T> T[] toArray(T[] array) {
+    public <T> T[] toArray(@Nullable T[] array) {
         return numericSet.toArray(array);
     }
 }

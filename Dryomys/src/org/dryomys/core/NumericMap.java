@@ -148,7 +148,7 @@ public class NumericMap<V> extends NumericStructure implements Map<Number, V> {
      */
     @Override
     @Nullable
-    public V put(Number passedKey, V value) {
+    public V put(@Nullable Number passedKey, @Nullable V value) {
         V result = null;
         if (hasSomeNull(passedKey, value)) {
             throw new NullArgumentException();
@@ -157,7 +157,7 @@ public class NumericMap<V> extends NumericStructure implements Map<Number, V> {
             result = this.numericMap.put(passedKey, value);
         } else {
             try {
-                if (isTypeConsistent(passedKey)) {
+                if (passedKey != null && isTypeConsistent(passedKey)) {
                     Number[] keys = keysAsArray();
                     Number closestKey = engine.getClosest(passedKey, keys);
 
@@ -187,15 +187,17 @@ public class NumericMap<V> extends NumericStructure implements Map<Number, V> {
      */
     @SuppressWarnings("unchecked")
     @Override
-    public void putAll(Map<? extends Number, ? extends V> argMap) {
-        Set<Number> keys = (Set<Number>) argMap.keySet();
-        for (Number number : keys) {
-            V value = argMap.get(number);
+    public void putAll(@Nullable Map<? extends Number, ? extends V> argMap) {
+        if(argMap != null){
+            Set<Number> keys = (Set<Number>) argMap.keySet();
+            for (Number number : keys) {
+                V value = argMap.get(number);
 
-            if (hasSomeNull(number, value)) {
-                throw new NullUnsupportedException();
-            } else {
-                this.put(number, value);
+                if (hasSomeNull(number, value)) {
+                    throw new NullUnsupportedException();
+                } else {
+                    this.put(number, value);
+                }
             }
         }
     }
