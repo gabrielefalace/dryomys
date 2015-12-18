@@ -3,7 +3,7 @@ dryomys
 
 java numeric tools
 
-Java SE library supporting 
+Java SE library providing 
 
   • numerical operation 
   
