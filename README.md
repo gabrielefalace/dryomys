@@ -1,7 +1,7 @@
 dryomys
 =======
 
-java numeric tools
+java numeric collections
 
 Java SE library providing 
 
