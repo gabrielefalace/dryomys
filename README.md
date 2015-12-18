@@ -5,7 +5,7 @@ java numeric tools
 
 Java SE library providing 
 
-  • numerical operation 
+  • numerical operations
   
   
   • data structures with numerical built-in approximation operations.
